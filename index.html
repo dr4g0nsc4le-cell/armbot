@@ -2,363 +2,301 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>ARMBOT — технический перевод и координация ВЭД</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none; /* нельзя выделить текст */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
-            background-color: #0a0c10;
-            font-family: 'Inter', sans-serif;
-            color: #e8edf2;
+            background-color: #0a0a0a;
+            font-family: 'Courier New', 'Fira Code', 'IBM Plex Mono', monospace;
+            color: #e0e0e0;
             line-height: 1.5;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            background: #0f0f0f;
+            border-left: 4px solid #b85c1a;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #e07c2c;
+            transition: width 0.4s ease;
+        }
+
+        .container:hover::before {
+            width: 100%;
         }
 
         .header {
-            padding: 48px 0 32px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid #2a2a2a;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #FFFFFF 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .logo span {
-            font-weight: 400;
-            color: #5c6b7e;
-            background: none;
-        }
-
-        .subhead {
-            font-size: 1.1rem;
-            color: #8e9aab;
-            max-width: 700px;
-        }
-
-        .clearance-badge {
-            margin-top: 24px;
+            font-size: 2.8rem;
+            font-weight: bold;
+            letter-spacing: -2px;
+            color: #e07c2c;
+            text-transform: uppercase;
+            font-family: monospace;
             display: inline-block;
-            background: rgba(45, 120, 200, 0.12);
-            border-left: 3px solid #2d78c8;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #bdd9ff;
-            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '_';
+            opacity: 1;
+            animation: blink 1.2s step-end infinite;
+            color: #e07c2c;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+            border-left: 3px solid #e07c2c;
+            padding-left: 1rem;
         }
 
         .section {
-            padding: 64px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 3rem;
         }
 
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 16px;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #e07c2c;
+            font-weight: bold;
         }
 
-        .section-sub {
-            color: #8e9aab;
-            max-width: 700px;
-            margin-bottom: 48px;
-        }
-
-        .services-grid {
+        .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 24px;
+            gap: 1.8rem;
         }
 
-        .service-card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 24px;
-            padding: 32px 24px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.2s ease;
+        .card {
+            background: #111;
+            border: 1px solid #2c2c2c;
+            padding: 1.5rem;
+            transition: all 0.25s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
         }
 
-        .service-card:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(45,120,200,0.4);
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .service-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:nth-child(4) { animation-delay: 0.2s; }
+        .card:nth-child(5) { animation-delay: 0.25s; }
+        .card:nth-child(6) { animation-delay: 0.3s; }
+
+        .card:hover {
+            border-color: #e07c2c;
+            background: #141414;
+            transform: translateY(-2px);
         }
 
-        .service-price small {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #8e9aab;
+        .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e07c2c;
+            margin: 1rem 0 0.5rem;
         }
 
-        .service-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 16px 0 12px;
-        }
-
-        .service-desc {
-            color: #b9c2cf;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .service-note {
-            font-size: 0.8rem;
-            color: #5c6b7e;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 16px;
-            margin-top: 16px;
-        }
-
-        .cases-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .case-item {
-            background: rgba(255,255,255,0.02);
-            border-radius: 20px;
-            padding: 24px 28px;
-            border-left: 4px solid #2d78c8;
-        }
-
-        .case-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .case-desc {
-            color: #b9c2cf;
-            margin-bottom: 12px;
-        }
-
-        .case-result {
-            font-size: 0.9rem;
-            color: #8e9aab;
-        }
-
-        .highlight {
-            color: #2d78c8;
-            font-weight: 500;
-        }
-
-        .brand-block {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 32px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 28px;
-            padding: 32px;
-            margin: 32px 0;
-        }
-
-        .cert-link {
-            font-family: monospace;
-            font-size: 0.8rem;
-            color: #6c7b8e;
-        }
-
-        .doc-teaser {
-            background: rgba(45,120,200,0.08);
-            border-radius: 20px;
-            padding: 28px;
-            margin: 32px 0;
-            border: 1px solid rgba(45,120,200,0.3);
-        }
-
-        .doc-teaser p {
-            margin-bottom: 16px;
-            color: #cbd5e6;
-        }
-
-        .btn-outline {
+        .badge {
+            background: #b85c1a;
+            color: black;
+            font-weight: bold;
             display: inline-block;
-            padding: 12px 28px;
-            border: 1px solid #2d78c8;
-            border-radius: 40px;
-            color: #bdd9ff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-            background: transparent;
-            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
         }
 
-        .btn-outline:hover {
-            background: #2d78c8;
-            color: #0a0c10;
+        .impact-text {
+            font-size: 1rem;
+            color: #ddd;
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #b85c1a;
         }
 
-        .contact {
+        .footer {
+            margin-top: 3rem;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 2rem;
+            font-size: 0.8rem;
             text-align: center;
-            padding: 48px 0 64px;
-        }
-
-        .email {
-            font-size: 1.5rem;
-            font-weight: 500;
-            background: rgba(255,255,255,0.03);
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 60px;
-            margin: 20px 0;
-        }
-
-        .footer-note {
-            font-size: 0.75rem;
-            color: #4a5568;
-            text-align: center;
-            padding: 32px 0 48px;
+            color: #777;
         }
 
         a {
-            color: #bdd9ff;
+            color: #e07c2c;
             text-decoration: none;
+        }
+
+        .contact-email {
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: #111;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e07c2c;
+            letter-spacing: 0px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .contact-email:hover {
+            background: #e07c2c;
+            color: black;
+            border-color: #e07c2c;
         }
 
         @media (max-width: 700px) {
             .container {
-                padding: 0 20px;
-            }
-            .section {
-                padding: 48px 0;
+                padding: 1rem;
             }
             .logo {
                 font-size: 2rem;
-            }
-            .service-price {
-                font-size: 1.6rem;
-            }
-            .brand-block {
-                flex-direction: column;
-                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">ARMBOT<span> / technical & coordination</span></div>
-            <div class="subhead">Технический перевод. Координация ВЭД. Пуск китайского оборудования.</div>
-            <div class="clearance-badge">Опыт работы на режимных и стратегических объектах РФ (ВИАМ, НИИЭТ, атомная отрасль)</div>
-        </div>
+<div class="container">
+    <div class="header">
+        <div class="logo">ARMBOT</div>
+        <div class="tagline">технический перевод. координация ВЭД. пуск китайского оборудования.</div>
+        <div class="tagline" style="margin-top: 10px; color: #e07c2c;">опыт работы на режимных и стратегических объектах РФ (ВИАМ, НИИЭТ, атомная отрасль)</div>
+    </div>
 
-        <div class="section">
-            <div class="section-title">Четыре уровня решений</div>
-            <div class="section-sub">От перевода до полного цикла "поиск-поставка-пуск". Без звонков, без халявы, без потери лица.</div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-price">20 000 - 25 000 <small>₽/день</small></div>
-                    <div class="service-title">Базовый перевод</div>
-                    <div class="service-desc">Устный или письменный перевод на объекте. Только то, что говорят. Без советов и подноготной.</div>
-                    <div class="service-note">Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</div>
-                </div>
-                <div class="service-card">
-                    <div class="service-price">30 000 - 50 000 <small>₽/день</small></div>
-                    <div class="service-title">Координация китайской бригады</div>
-                    <div class="service-desc">Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Выявляю подноготную.</div>
-                    <div class="service-note">Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</div>
-                </div>
-                <div class="service-card">
-                    <div class="service-price">от 300 000 <small>₽ + %</small></div>
-                    <div class="service-title">Поиск поставщика под ключ</div>
-                    <div class="service-desc">Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл.</div>
-                    <div class="service-note">Экономлю ваши нервы и деньги. Без посредников.</div>
-                </div>
-                <div class="service-card">
-                    <div class="service-price">от 1 000 000 <small>₽/проект</small></div>
-                    <div class="service-title">Спасение оборудования</div>
-                    <div class="service-desc">Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение.</div>
-                    <div class="service-note">Результат, который не дал их подрядчик. Работаем там, где другие сдались.</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">Кейсы с режимных объектов</div>
-            <div class="section-sub">Вход по спецпропускам. Цифры и факты.</div>
-            <div class="cases-grid">
-                <div class="case-item">
-                    <div class="case-title">НИИЭТ (Воронеж) - микроэлектроника</div>
-                    <div class="case-desc">Китайский станок заливки микросхем не давал герметичность. Команда ARMBOT за 3 дня перенастроила параметры подачи компаунда.</div>
-                    <div class="case-result"><span class="highlight">Результат:</span> выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.</div>
-                </div>
-                <div class="case-item">
-                    <div class="case-title">ВИАМ (Москва) - авиационные материалы</div>
-                    <div class="case-desc">Пусконаладка прессового оборудования на стратегическом объекте. Координация китайских шеф-инженеров и российской команды.</div>
-                    <div class="case-result"><span class="highlight">Результат:</span> оборудование введено в эксплуатацию в срок. Работа в закрытом режиме.</div>
-                </div>
-                <div class="case-item">
-                    <div class="case-title">ЛЗМА (Люберцы) - трансформаторостроение</div>
-                    <div class="case-desc">5 производственных направлений, 20+ китайских специалистов. Полная координация и техническая синхронизация.</div>
-                    <div class="case-result"><span class="highlight">Результат:</span> проект завершен с опережением графика. Без привлечения доп. персонала.</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="doc-teaser">
-            <div class="section-title" style="font-size:1.4rem; margin-bottom:12px;">Закрытый документ ARMBOT</div>
-            <p>Это не просто файл. Это результат 10 лет работы на режимных объектах. Собранная мной информация о том, как искать китайских поставщиков, как проверять их, как не попасть на таможне и что делать, если оборудование встало.</p>
-            <p>Документ на двух языках (русский и китайский). Он не индексируется в поиске. Ссылка не публикуется в открытом доступе. Китайские поставщики не любят, когда такие материалы попадают в чужие руки. Там слишком много рабочих схем, которые они предпочитают не афишировать.</p>
-            <p>Поэтому никаких скачиваний по прямой ссылке. Напишите на почту - я отправлю доступ вручную. Для своих. Для тех, кто реально работает с Китаем.</p>
-            <div style="margin-top: 20px;">
-                <a href="mailto:arman707vip@163.com" class="btn-outline">Запросить документ →</a>
-            </div>
-        </div>
-
-        <div class="brand-block">
-            <div>
-                <strong style="font-size: 1.2rem;">ARMBOT</strong><br>
-                Свидетельство о депонировании<br>
-                № 226.018.899F от 18.03.2026<br>
-                <span class="cert-link">АО "ЕДРИД"</span>
-            </div>
-            <div>
-                <span style="color:#6c7b8e; font-size:0.85rem;">Бренд зарегистрирован. Все права защищены.</span>
-            </div>
-        </div>
-
-        <div class="contact">
-            <div class="section-title">Одна буква - и начинаем</div>
-            <div class="email">arman707vip@163.com</div>
-            <div style="color:#7e8c9e; max-width:500px; margin:0 auto;">Без звонков. Напишите задачу - получите цену и решение. Для китайских партнеров - версия документа на двух языках по запросу.</div>
-        </div>
-
-        <div class="footer-note">
-            ARMBOT / Арман Степанян - технический перевод, координация ВЭД, поиск поставщиков, экстренный пуск оборудования.<br>
-            Работа по всей РФ. Опыт работы на режимных объектах. Опыт 10+ лет.
+    <div class="section">
+        <div class="section-title">Четыре уровня решений</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge">Базовый перевод</span><div class="price">20 000 - 25 000 ₽/день</div>Устный или письменный перевод на объекте. Только то, что говорят. Без советов и подноготной. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</div>
+            <div class="card"><span class="badge">Координация китайской бригады</span><div class="price">30 000 - 50 000 ₽/день</div>Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Выявляю подноготную. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</div>
+            <div class="card"><span class="badge">Поиск поставщика под ключ</span><div class="price">от 300 000 ₽ + %</div>Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Экономлю ваши нервы и деньги. Без посредников.</div>
+            <div class="card"><span class="badge">Спасение оборудования</span><div class="price">от 1 000 000 ₽/проект</div>Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Результат, который не дал их подрядчик. Работаем там, где другие сдались.</div>
         </div>
     </div>
+
+    <div class="section">
+        <div class="section-title">Кейсы с режимных объектов</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge">НИИЭТ (Воронеж) - микроэлектроника</span>Китайский станок заливки микросхем не давал герметичность. Команда ARMBOT за 3 дня перенастроила параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.</div>
+            <div class="card"><span class="badge">ВИАМ (Москва) - авиационные материалы</span>Пусконаладка прессового оборудования на стратегическом объекте. Координация китайских шеф-инженеров и российской команды. Результат: оборудование введено в эксплуатацию в срок. Работа в закрытом режиме.</div>
+            <div class="card"><span class="badge">ЛЗМА (Люберцы) - трансформаторостроение</span>5 производственных направлений, 20+ китайских специалистов. Полная координация и техническая синхронизация. Результат: проект завершен с опережением графика. Без привлечения доп. персонала.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Ударная группа ARMBOT</div>
+        <div class="grid-2">
+            <div class="card">
+                <span class="badge">штат ударных переводчиков</span>
+                <div class="price">5 в Китае + 5 резерв в России</div>
+                <div>Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента, а не на отбывание часов. Плечом к плечу.</div>
+            </div>
+            <div class="card">
+                <span class="badge">резерв в России</span>
+                <div class="price">ещё 5 человек</div>
+                <div>Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.</div>
+            </div>
+        </div>
+        <div class="impact-text">Перевести - это одно. Заставить работать - это ARMBOT. Команда, которая решает проблемы, а не создаёт видимость деятельности.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Экосистема ARMBOT</div>
+        <div class="grid-2">
+            <div class="card">
+                <span class="badge">Юристы</span>
+                <div class="price">РФ и КНР</div>
+                <div>Собственная группа юристов в России и Китае. Работают в единой цепочке. Русские специалисты обеспечивают чистоту контракта. Китайские - пресекают попытки местных поставщиков навязать невыгодные условия.</div>
+            </div>
+            <div class="card">
+                <span class="badge">Логисты</span>
+                <div class="price">там и тут</div>
+                <div>Свои логисты в обеих странах. Таможня, перевозка, оформление. Без фрилансеров, которые исчезают при первой проблеме. Только те, кто доводит груз до точки.</div>
+            </div>
+        </div>
+        <div class="impact-text">Не "найти кого-нибудь". Своя стая. Каждый знает, что делать, когда клиенту нужен результат, а не отписка.</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Козыри</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge">Допуски</span>Работа на объектах с особым режимом доступа. Вход по спецпропускам.</div>
+            <div class="card"><span class="badge">Спасение, а не перевод</span>Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.</div>
+            <div class="card"><span class="badge">Свои в Китае</span>Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.</div>
+            <div class="card"><span class="badge">Закрытая база</span>10 лет работы. Поставщики, схемы, подводные камни. Для своих.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Закрытый документ ARMBOT</div>
+        <p>Это не просто файл. Это результат 10 лет работы на режимных объектах. Собранная информация о том, как искать китайских поставщиков, проверять их, не попадать на таможне и что делать, если оборудование встало.</p>
+        <p style="margin-top: 0.8rem;">Документ на двух языках (русский и китайский). Он не индексируется в поиске. Ссылка не публикуется в открытом доступе.</p>
+        <p style="margin-top: 0.8rem;">Напишите на почту - отправлю доступ вручную. Для своих.</p>
+    </div>
+
+    <div class="footer">
+        <div style="margin-bottom: 1rem;">ARMBOT</div>
+        <div>Свидетельство о депонировании № 226.018.899F от 18.03.2026, АО "ЕДРИД"</div>
+        <div style="margin: 1rem 0;">Бренд зарегистрирован. Все права защищены.</div>
+        <a href="mailto:arman707vip@163.com" class="contact-email">arman707vip@163.com</a>
+        <div style="margin-top: 1rem;">Без звонков. Напишите задачу - получите цену и решение.</div>
+    </div>
+</div>
 </body>
 </html>
