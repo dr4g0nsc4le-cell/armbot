@@ -177,6 +177,87 @@
             margin-top: 1rem;
         }
 
+        /* БЛОК ОТЗЫВОВ — ДОРАБОТАННЫЙ ДИЗАЙН */
+        .reviews-block {
+            margin: 3rem 0 2rem;
+        }
+        .reviews-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #c96f2c;
+            font-weight: bold;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+        .review-card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            padding: 1.5rem;
+            transition: all 0.25s ease;
+            border-left: 3px solid #c96f2c;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+            line-height: 1.5;
+        }
+        .review-card:nth-child(1) { animation-delay: 0.1s; }
+        .review-card:nth-child(2) { animation-delay: 0.15s; }
+        .review-card:nth-child(3) { animation-delay: 0.2s; }
+        .review-card:nth-child(4) { animation-delay: 0.25s; }
+        .review-card:hover {
+            border-color: #c96f2c;
+            background: #141414;
+            transform: translateY(-2px);
+        }
+        .review-text {
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 1rem;
+            color: #ccc;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .review-text::before {
+            content: '“';
+            position: absolute;
+            left: 0;
+            top: -0.2rem;
+            font-size: 1.4rem;
+            color: #c96f2c;
+            opacity: 0.6;
+        }
+        .review-author {
+            font-weight: bold;
+            color: #c96f2c;
+            font-size: 0.8rem;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .review-date {
+            color: #777;
+            font-weight: normal;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+        }
+        .parent-review {
+            border-left-color: #4a6a8a;
+        }
+        .parent-review .review-author {
+            color: #4a6a8a;
+        }
+        .parent-review .review-text::before {
+            color: #4a6a8a;
+        }
+
         .footer {
             margin-top: 3rem;
             border-top: 1px solid #2a2a2a;
@@ -296,6 +377,35 @@
         <p style="margin-top: 0.8rem;">Документ на двух языках (русский и китайский). Не индексируется в поиске. Ссылка не публикуется в открытом доступе.</p>
         <p style="margin-top: 0.8rem; color: #c96f2c;">Доступ по запросу для подтверждённых клиентов.</p>
     </div>
+
+    <!-- НАЧАЛО БЛОКА ОТЗЫВОВ — ДОРАБОТАННЫЙ -->
+    <div class="reviews-block">
+        <div class="reviews-title">› НАС РЕКОМЕНДУЮТ</div>
+        <div class="reviews-grid">
+            <!-- Ирина -->
+            <div class="review-card">
+                <div class="review-text">Арман прекрасно справился с задачей — последовательный перевод бизнес-переговоров с китайскими партнерами. Коммуникабельный, инициативный, пунктуальный, отличный специалист. Переговоры прошли идеально.</div>
+                <div class="review-author">Ирина, руководитель отдела закупок <span class="review-date">март 2025</span></div>
+            </div>
+            <!-- Юлия -->
+            <div class="review-card">
+                <div class="review-text">Две недели без выходных, сложнейшие термины: "обечайка", "шпонки", "коллектор". Арман переводил так, что китайский инженер понимал с первого раза. Плюс встреча в аэропорту, гостиница — всё на себе. Лучший!</div>
+                <div class="review-author">Юлия, технический директор <span class="review-date">октябрь 2025</span></div>
+            </div>
+            <!-- Собственник ЛЗМА / 7 китайских директоров -->
+            <div class="review-card">
+                <div class="review-text">На ЛЗМА Арман одновременно координировал 7 директоров китайских компаний. Каждый — со своим оборудованием. Он вёл переговоры по каждому участку, доводил конструктив, снимал конфликты. Без него проект бы встал. Сдали с опережением.</div>
+                <div class="review-author">Собственник производства, ЛЗМА <span class="review-date">январь 2026</span></div>
+            </div>
+            <!-- Родитель (дети) -->
+            <div class="review-card parent-review">
+                <div class="review-text">Арман нашёл подход к ребёнку за одно занятие. Китайский перестал быть "страшным". Результат виден через месяц. Искренне рекомендую как преподавателя.</div>
+                <div class="review-author">Екатерина, мама ученика (7 лет) <span class="review-date">2025</span></div>
+            </div>
+        </div>
+        <div class="impact-text" style="margin-top: 1.5rem;">Отзывы родителей — по запросу. Работаю на результат, а не на отбывание часов.</div>
+    </div>
+    <!-- КОНЕЦ БЛОКА ОТЗЫВОВ -->
 
     <div class="footer">
         <div style="margin-bottom: 1rem;">ARMBOT</div>
