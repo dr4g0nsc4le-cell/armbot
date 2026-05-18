@@ -11,24 +11,19 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
-
         body {
             background-color: #0a0a0a;
-            font-family: 'Courier New', 'Fira Code', 'IBM Plex Mono', monospace;
+            font-family: 'Courier New', 'Fira Code', monospace;
             color: #ddd;
             line-height: 1.65;
             padding: 2rem 1rem;
             animation: fadeIn 0.6s ease-out;
         }
-
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -38,7 +33,6 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
             position: relative;
         }
-
         .container::before {
             content: '';
             position: absolute;
@@ -49,12 +43,9 @@
             background: #c96f2c;
             transition: width 0.5s ease;
         }
-
         .container:hover::before {
             width: 100%;
         }
-
-        /* Меню */
         .top-menu {
             display: flex;
             justify-content: space-between;
@@ -97,12 +88,10 @@
             background: #c96f2c;
             color: #0a0a0a;
         }
-
         .header {
             margin-bottom: 2.5rem;
             padding-bottom: 1rem;
         }
-
         .logo {
             font-size: 2.8rem;
             font-weight: bold;
@@ -113,7 +102,6 @@
             display: inline-block;
             position: relative;
         }
-
         .logo::after {
             content: '_';
             opacity: 1;
@@ -121,12 +109,10 @@
             color: #c96f2c;
             font-weight: bold;
         }
-
         @keyframes blink {
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
         }
-
         .tagline {
             font-size: 1rem;
             color: #999;
@@ -134,11 +120,9 @@
             border-left: 3px solid #c96f2c;
             padding-left: 1rem;
         }
-
         .section {
             margin-bottom: 3rem;
         }
-
         .section-title {
             font-size: 1.5rem;
             text-transform: uppercase;
@@ -150,13 +134,11 @@
             border-left: 5px solid #c96f2c;
             font-weight: bold;
         }
-
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.8rem;
         }
-
         .card {
             background: #111;
             border: 1px solid #2a2a2a;
@@ -166,61 +148,53 @@
             opacity: 0;
             animation: slideUp 0.5s ease forwards;
         }
-
         @keyframes slideUp {
             to {
                 transform: translateY(0);
                 opacity: 1;
             }
         }
-
         .card:nth-child(1) { animation-delay: 0.05s; }
         .card:nth-child(2) { animation-delay: 0.1s; }
         .card:nth-child(3) { animation-delay: 0.15s; }
         .card:nth-child(4) { animation-delay: 0.2s; }
         .card:nth-child(5) { animation-delay: 0.25s; }
         .card:nth-child(6) { animation-delay: 0.3s; }
-
         .card:hover {
             border-color: #c96f2c;
             background: #141414;
             transform: translateY(-2px);
         }
-
-        /* Стили для клиентов и спонсоров */
         .partner-card {
             background: #111;
-            border: 1px solid #2a2a2a;
+            border: 1px solid #333;
             padding: 1rem;
             text-align: center;
             transition: all 0.2s ease;
             font-weight: bold;
             letter-spacing: 1px;
+            color: #ccc;
         }
         .partner-card:hover {
             border-color: #c96f2c;
             background: #141414;
         }
         .client-card {
-            border-left: 3px solid #888;
+            border-left: 2px solid #666;
         }
         .sponsor-card {
-            border-top: 2px solid #d4af37;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+            border-top: 2px solid #aaa;
         }
-        .partner-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
         .price {
             font-size: 1.6rem;
             font-weight: bold;
             color: #c96f2c;
             margin: 1rem 0 0.5rem;
         }
-
+        .price small {
+            font-size: 0.8rem;
+            color: #888;
+        }
         .badge {
             background: #8c4b1a;
             color: #111;
@@ -231,7 +205,6 @@
             letter-spacing: 1px;
             margin-bottom: 0.8rem;
         }
-
         .impact-text {
             font-size: 1rem;
             color: #bbb;
@@ -239,14 +212,12 @@
             padding-left: 1rem;
             border-left: 2px solid #c96f2c;
         }
-
         .highlight-block {
             background: #141414;
             border-top: 2px solid #c96f2c;
             padding: 1.8rem;
             margin-top: 1rem;
         }
-
         .reviews-block {
             margin: 3rem 0 2rem;
         }
@@ -326,7 +297,6 @@
         .parent-review .review-text::before {
             color: #4a6a8a;
         }
-
         .footer {
             margin-top: 3rem;
             border-top: 1px solid #2a2a2a;
@@ -335,12 +305,10 @@
             text-align: center;
             color: #777;
         }
-
         a {
             color: #c96f2c;
             text-decoration: none;
         }
-
         .contact-email {
             font-size: 1.3rem;
             font-weight: bold;
@@ -352,13 +320,11 @@
             transition: 0.2s;
             cursor: pointer;
         }
-
         .contact-email:hover {
             background: #c96f2c;
             color: #0a0a0a;
             border-color: #c96f2c;
         }
-
         @media (max-width: 700px) {
             .container {
                 padding: 1rem;
@@ -402,10 +368,10 @@
     <div class="section">
         <div class="section-title" data-key="levels_title">› четыре уровня решений</div>
         <div class="grid-2">
-            <div class="card"><span class="badge" data-key="badge1">Базовый перевод</span><div class="price">20 000 - 25 000 ₽/день</div><span data-key="desc1">Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</span></div>
-            <div class="card"><span class="badge" data-key="badge2">Координация китайской бригады</span><div class="price">30 000 - 50 000 ₽/день</div><span data-key="desc2">Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</span></div>
-            <div class="card"><span class="badge" data-key="badge3">Поиск поставщика под ключ</span><div class="price">от 300 000 ₽ + %</div><span data-key="desc3">Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.</span></div>
-            <div class="card"><span class="badge" data-key="badge4">Спасение оборудования</span><div class="price">от 1 000 000 ₽/проект</div><span data-key="desc4">Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Работаем там, где другие сдались.</span></div>
+            <div class="card"><span class="badge" data-key="badge1">Базовый перевод</span><div class="price"><span data-key="price1_ru">20 000 - 25 000 ₽</span><small data-key="price1_unit"> / день</small></div><span data-key="desc1">Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</span></div>
+            <div class="card"><span class="badge" data-key="badge2">Координация китайской бригады</span><div class="price"><span data-key="price2_ru">30 000 - 50 000 ₽</span><small data-key="price2_unit"> / день</small></div><span data-key="desc2">Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</span></div>
+            <div class="card"><span class="badge" data-key="badge3">Поиск поставщика под ключ</span><div class="price"><span data-key="price3_ru">от 300 000 ₽</span><small data-key="price3_unit"> + %</small></div><span data-key="desc3">Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.</span></div>
+            <div class="card"><span class="badge" data-key="badge4">Спасение оборудования</span><div class="price"><span data-key="price4_ru">от 1 000 000 ₽</span><small data-key="price4_unit"> / проект</small></div><span data-key="desc4">Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Работаем там, где другие сдались.</span></div>
         </div>
     </div>
 
@@ -418,27 +384,26 @@
         </div>
     </div>
 
-    <!-- БЛОК КЛИЕНТОВ И СПОНСОРОВ -->
     <div class="section">
         <div class="section-title" data-key="partners_title">› клиенты и спонсоры</div>
         <div style="margin-bottom: 2rem;">
-            <div class="section-title" style="font-size: 1.2rem; border-left-color: #888;" data-key="clients_sub">Клиенты</div>
+            <div class="section-title" style="font-size: 1.2rem; border-left-color: #666;" data-key="clients_sub">Клиенты</div>
             <div class="grid-2">
-                <div class="partner-card client-card"><span class="partner-icon">🏭</span> Nagro</div>
-                <div class="partner-card client-card"><span class="partner-icon">⚛️</span> Rosatom</div>
-                <div class="partner-card client-card"><span class="partner-icon">🌾</span> TechAgro</div>
-                <div class="partner-card client-card"><span class="partner-icon">⛽</span> Gazprom</div>
-                <div class="partner-card client-card"><span class="partner-icon">🧪</span> ChemProm</div>
-                <div class="partner-card client-card"><span class="partner-icon">❄️</span> RusClimate</div>
+                <div class="partner-card client-card">Nagro</div>
+                <div class="partner-card client-card">Rosatom</div>
+                <div class="partner-card client-card">TechAgro</div>
+                <div class="partner-card client-card">Gazprom</div>
+                <div class="partner-card client-card">ChemProm</div>
+                <div class="partner-card client-card">RusClimate</div>
             </div>
         </div>
         <div>
-            <div class="section-title" style="font-size: 1.2rem; border-left-color: #d4af37;" data-key="sponsors_sub">Спонсоры</div>
+            <div class="section-title" style="font-size: 1.2rem; border-left-color: #aaa;" data-key="sponsors_sub">Спонсоры</div>
             <div class="grid-2">
-                <div class="partner-card sponsor-card"><span class="partner-icon">🤖</span> Beijing Honde Robotics LTD</div>
-                <div class="partner-card sponsor-card"><span class="partner-icon">🏗️</span> Shenyang Heavy Machinery Group</div>
-                <div class="partner-card sponsor-card"><span class="partner-icon">⚡</span> Harbin Electric Trading Co.</div>
-                <div class="partner-card sponsor-card"><span class="partner-icon">📡</span> Xi’an Techimport Ltd</div>
+                <div class="partner-card sponsor-card">Beijing Honde Robotics LTD</div>
+                <div class="partner-card sponsor-card">Shenyang Heavy Machinery Group</div>
+                <div class="partner-card sponsor-card">Harbin Electric Trading Co.</div>
+                <div class="partner-card sponsor-card">Xi'an Techimport Ltd</div>
             </div>
         </div>
         <div class="impact-text" style="margin-top: 1.5rem;" data-key="partner_note">Поставщики, которые прошли проверку на режимных объектах.</div>
@@ -449,12 +414,12 @@
         <div class="grid-2">
             <div class="card">
                 <span class="badge" data-key="strike_badge1">штат ударных переводчиков</span>
-                <div class="price">5 в Китае + 5 резерв в России</div>
+                <div class="price"><span data-key="strike_price1">5 в Китае + 5 резерв в России</span></div>
                 <span data-key="strike_desc1">Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента.</span>
             </div>
             <div class="card">
                 <span class="badge" data-key="strike_badge2">резерв в России</span>
-                <div class="price">ещё 5 человек</div>
+                <div class="price"><span data-key="strike_price2">ещё 5 человек</span></div>
                 <span data-key="strike_desc2">Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.</span>
             </div>
         </div>
@@ -483,7 +448,7 @@
         <div class="grid-2">
             <div class="card"><span class="badge" data-key="trump1_title">Допуски</span><span data-key="trump1_desc">Работа на объектах с особым режимом доступа. Вход по спецпропускам.</span></div>
             <div class="card"><span class="badge" data-key="trump2_title">Спасение, а не перевод</span><span data-key="trump2_desc">Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.</span></div>
-            <div class="card"><span class="badge" data-key="trump3_title">Свои в Китае</span><span data-key="trump3_desc">Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.</span></div>
+            <div class="card"><span class="badge" data-key="trump3_title">Свои в Китае</span><span data-key="trump3_desc">Люди, которые включаются, когда требуется глубокая координация с китайской стороной.</span></div>
             <div class="card"><span class="badge" data-key="trump4_title">Закрытая база</span><span data-key="trump4_desc">10 лет работы. Поставщики, схемы, подводные камни. Для своих.</span></div>
         </div>
     </div>
@@ -528,13 +493,16 @@
 </div>
 
 <script>
-    // Китайский перевод (коротко и технически)
     const translations = {
         ru: {
             tagline_main: "технический перевод. координация ВЭД. пуск китайского оборудования.",
             secret_objects: "опыт работы на режимных и стратегических объектах РФ",
             levels_title: "› четыре уровня решений",
             badge1: "Базовый перевод", badge2: "Координация китайской бригады", badge3: "Поиск поставщика под ключ", badge4: "Спасение оборудования",
+            price1_ru: "20 000 - 25 000 ₽", price1_unit: " / день",
+            price2_ru: "30 000 - 50 000 ₽", price2_unit: " / день",
+            price3_ru: "от 300 000 ₽", price3_unit: " + %",
+            price4_ru: "от 1 000 000 ₽", price4_unit: " / проект",
             desc1: "Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.",
             desc2: "Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.",
             desc3: "Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.",
@@ -548,6 +516,7 @@
             partner_note: "Поставщики, которые прошли проверку на режимных объектах.",
             strike_title: "› ударная группа ARMBOT",
             strike_badge1: "штат ударных переводчиков", strike_badge2: "резерв в России",
+            strike_price1: "5 в Китае + 5 резерв в России", strike_price2: "ещё 5 человек",
             strike_desc1: "Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента.",
             strike_desc2: "Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.",
             strike_quote: "Перевод решает задачу. ARMBOT решает проблему. Команда, которая работает на результат, а не на отбывание часов.",
@@ -560,7 +529,7 @@
             trump1_title: "Допуски", trump2_title: "Спасение, а не перевод", trump3_title: "Свои в Китае", trump4_title: "Закрытая база",
             trump1_desc: "Работа на объектах с особым режимом доступа. Вход по спецпропускам.",
             trump2_desc: "Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.",
-            trump3_desc: "Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.",
+            trump3_desc: "Люди, которые включаются, когда требуется глубокая координация с китайской стороной.",
             trump4_desc: "10 лет работы. Поставщики, схемы, подводные камни. Для своих.",
             doc_title: "› закрытый документ ARMBOT",
             doc_desc1: "10 лет работы на режимных объектах. Информация о том, как искать китайских поставщиков, проверять их, не попадать на таможне и что делать, если оборудование встало.",
@@ -581,6 +550,10 @@
             secret_objects: "在俄罗斯保密和战略设施的工作经验",
             levels_title: "› 四个解决方案级别",
             badge1: "基础翻译", badge2: "中国团队协调", badge3: "交钥匙供应商寻源", badge4: "设备紧急救援",
+            price1_ru: "20,000 - 25,000 ₽", price1_unit: " / 天",
+            price2_ru: "30,000 - 50,000 ₽", price2_unit: " / 天",
+            price3_ru: "300,000 ₽起", price3_unit: " + 提成",
+            price4_ru: "1,000,000 ₽起", price4_unit: " / 项目",
             desc1: "现场口译或笔译。只翻译所说的内容。无建议。适用于一切受控、只需要专业翻译的情况。",
             desc2: "翻译 + 分析中国专家的工作。我能看到他们在哪里损失质量或拖延时间。您在现场的耳目。建议和修改另计。",
             desc3: "在中国寻找经过验证的供应商。验证、谈判、协助合同、物流、海关。全周期。无中间商。",
@@ -594,6 +567,7 @@
             partner_note: "在保密设施经过验证的供应商。",
             strike_title: "› ARMBOT 突击小组",
             strike_badge1: "突击翻译人员编制", strike_badge2: "俄罗斯后备队",
+            strike_price1: "5人在中国 + 5人后备队在俄罗斯", strike_price2: "另外5人",
             strike_desc1: "为非常规任务而生的工程师翻译。不仅仅是翻译，而是流程分析。他们看到中国方损失质量或拖延时间的潜在节点。为客户的结果而工作。",
             strike_desc2: "俄罗斯境内的常备后备队。相同的标准和要求。项目扩展或关键方向保障时的即时增援。",
             strike_quote: "翻译解决问题。ARMBOT解决问题。为结果而非混时间而工作的团队。",
@@ -606,7 +580,7 @@
             trump1_title: "准入许可", trump2_title: "救援而非翻译", trump3_title: "在中国有自己人", trump4_title: "封闭数据库",
             trump1_desc: "在特殊访问权限设施工作。凭特别通行证进入。",
             trump2_desc: "机床停机 - 我带自己的工程师来。诊断、维修、启动。",
-            trump3_desc: "当中国方开始按自己的规则行事时，这些人就会介入。",
+            trump3_desc: "当需要与中国方深度协调时，这些人就会介入。",
             trump4_desc: "10年工作经验。供应商、方案、陷阱。仅限自己人。",
             doc_title: "› ARMBOT 封闭文件",
             doc_desc1: "在保密设施工作10年。关于如何寻找中国供应商、验证他们、避免海关问题以及设备停机时该做什么的信息。",
@@ -628,7 +602,7 @@
     function applyLanguage(lang) {
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.getAttribute('data-key');
-            if(translations[lang] && translations[lang][key]) {
+            if(translations[lang] && translations[lang][key] !== undefined) {
                 if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.placeholder = translations[lang][key];
                 } else {
