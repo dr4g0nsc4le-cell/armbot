@@ -54,10 +54,53 @@
             width: 100%;
         }
 
-        .header {
+        /* Меню */
+        .top-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid #2a2a2a;
+        }
+        .nav-links a {
+            color: #c96f2c;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid #c96f2c;
+            color: #c96f2c;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .lang-btn.active {
+            background: #c96f2c;
+            color: #0a0a0a;
+        }
+        .lang-btn:hover {
+            background: #c96f2c;
+            color: #0a0a0a;
+        }
+
+        .header {
             margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+            padding-bottom: 1rem;
         }
 
         .logo {
@@ -144,6 +187,33 @@
             transform: translateY(-2px);
         }
 
+        /* Стили для клиентов и спонсоров */
+        .partner-card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .partner-card:hover {
+            border-color: #c96f2c;
+            background: #141414;
+        }
+        .client-card {
+            border-left: 3px solid #888;
+        }
+        .sponsor-card {
+            border-top: 2px solid #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+        .partner-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
         .price {
             font-size: 1.6rem;
             font-weight: bold;
@@ -177,7 +247,6 @@
             margin-top: 1rem;
         }
 
-        /* БЛОК ОТЗЫВОВ — ДОРАБОТАННЫЙ ДИЗАЙН */
         .reviews-block {
             margin: 3rem 0 2rem;
         }
@@ -297,123 +366,294 @@
             .logo {
                 font-size: 2rem;
             }
+            .top-menu {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .nav-links {
+                display: flex;
+                justify-content: space-between;
+            }
+            .nav-links a {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="top-menu">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="ru">РУС</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Главная</a>
+            <a href="software.html">Прошивки и импорт</a>
+        </div>
+    </div>
     <div class="header">
         <div class="logo">ARMBOT</div>
-        <div class="tagline">технический перевод. координация ВЭД. пуск китайского оборудования.</div>
-        <div class="tagline" style="margin-top: 10px; color: #c96f2c;">опыт работы на режимных и стратегических объектах РФ</div>
+        <div class="tagline" data-key="tagline_main">технический перевод. координация ВЭД. пуск китайского оборудования.</div>
+        <div class="tagline" style="margin-top: 10px; color: #c96f2c;" data-key="secret_objects">опыт работы на режимных и стратегических объектах РФ</div>
     </div>
 
     <div class="section">
-        <div class="section-title">› четыре уровня решений</div>
+        <div class="section-title" data-key="levels_title">› четыре уровня решений</div>
         <div class="grid-2">
-            <div class="card"><span class="badge">Базовый перевод</span><div class="price">20 000 - 25 000 ₽/день</div>Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</div>
-            <div class="card"><span class="badge">Координация китайской бригады</span><div class="price">30 000 - 50 000 ₽/день</div>Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</div>
-            <div class="card"><span class="badge">Поиск поставщика под ключ</span><div class="price">от 300 000 ₽ + %</div>Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.</div>
-            <div class="card"><span class="badge">Спасение оборудования</span><div class="price">от 1 000 000 ₽/проект</div>Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Работаем там, где другие сдались.</div>
+            <div class="card"><span class="badge" data-key="badge1">Базовый перевод</span><div class="price">20 000 - 25 000 ₽/день</div><span data-key="desc1">Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.</span></div>
+            <div class="card"><span class="badge" data-key="badge2">Координация китайской бригады</span><div class="price">30 000 - 50 000 ₽/день</div><span data-key="desc2">Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.</span></div>
+            <div class="card"><span class="badge" data-key="badge3">Поиск поставщика под ключ</span><div class="price">от 300 000 ₽ + %</div><span data-key="desc3">Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.</span></div>
+            <div class="card"><span class="badge" data-key="badge4">Спасение оборудования</span><div class="price">от 1 000 000 ₽/проект</div><span data-key="desc4">Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Работаем там, где другие сдались.</span></div>
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">› кейсы</div>
+        <div class="section-title" data-key="cases_title">› кейсы</div>
         <div class="grid-2">
-            <div class="card"><span class="badge">НИИЭТ (Воронеж) - микроэлектроника</span><div class="price"></div>Китайский станок заливки микросхем не давал герметичность. Команда ARMBOT за 3 дня перенастроила параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.</div>
-            <div class="card"><span class="badge">ВИАМ (Москва) - авиационные материалы</span><div class="price"></div>Пусконаладка прессового оборудования. Координация китайских шеф-инженеров и российской команды. Результат: оборудование введено в эксплуатацию в срок. Работа в закрытом режиме.</div>
-            <div class="card"><span class="badge">ЛЗМА (Люберцы) - трансформаторостроение</span><div class="price"></div>5 производственных направлений, 20+ китайских специалистов. Полная координация и техническая синхронизация. Результат: проект завершен с опережением графика.</div>
+            <div class="card"><span class="badge">НИИЭТ (Воронеж) - микроэлектроника</span><span data-key="case1">Китайский станок заливки микросхем не давал герметичность. Команда ARMBOT за 3 дня перенастроила параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.</span></div>
+            <div class="card"><span class="badge">ВИАМ (Москва) - авиационные материалы</span><span data-key="case2">Пусконаладка прессового оборудования. Координация китайских шеф-инженеров и российской команды. Результат: оборудование введено в эксплуатацию в срок. Работа в закрытом режиме.</span></div>
+            <div class="card"><span class="badge">ЛЗМА (Люберцы) - трансформаторостроение</span><span data-key="case3">5 производственных направлений, 20+ китайских специалистов. Полная координация и техническая синхронизация. Результат: проект завершен с опережением графика.</span></div>
         </div>
+    </div>
+
+    <!-- БЛОК КЛИЕНТОВ И СПОНСОРОВ -->
+    <div class="section">
+        <div class="section-title" data-key="partners_title">› клиенты и спонсоры</div>
+        <div style="margin-bottom: 2rem;">
+            <div class="section-title" style="font-size: 1.2rem; border-left-color: #888;" data-key="clients_sub">Клиенты</div>
+            <div class="grid-2">
+                <div class="partner-card client-card"><span class="partner-icon">🏭</span> Nagro</div>
+                <div class="partner-card client-card"><span class="partner-icon">⚛️</span> Rosatom</div>
+                <div class="partner-card client-card"><span class="partner-icon">🌾</span> TechAgro</div>
+                <div class="partner-card client-card"><span class="partner-icon">⛽</span> Gazprom</div>
+                <div class="partner-card client-card"><span class="partner-icon">🧪</span> ChemProm</div>
+                <div class="partner-card client-card"><span class="partner-icon">❄️</span> RusClimate</div>
+            </div>
+        </div>
+        <div>
+            <div class="section-title" style="font-size: 1.2rem; border-left-color: #d4af37;" data-key="sponsors_sub">Спонсоры</div>
+            <div class="grid-2">
+                <div class="partner-card sponsor-card"><span class="partner-icon">🤖</span> Beijing Honde Robotics LTD</div>
+                <div class="partner-card sponsor-card"><span class="partner-icon">🏗️</span> Shenyang Heavy Machinery Group</div>
+                <div class="partner-card sponsor-card"><span class="partner-icon">⚡</span> Harbin Electric Trading Co.</div>
+                <div class="partner-card sponsor-card"><span class="partner-icon">📡</span> Xi’an Techimport Ltd</div>
+            </div>
+        </div>
+        <div class="impact-text" style="margin-top: 1.5rem;" data-key="partner_note">Поставщики, которые прошли проверку на режимных объектах.</div>
     </div>
 
     <div class="highlight-block">
-        <div class="section-title" style="margin-top: 0;">› ударная группа ARMBOT</div>
+        <div class="section-title" style="margin-top: 0;" data-key="strike_title">› ударная группа ARMBOT</div>
         <div class="grid-2">
             <div class="card">
-                <span class="badge">штат ударных переводчиков</span>
+                <span class="badge" data-key="strike_badge1">штат ударных переводчиков</span>
                 <div class="price">5 в Китае + 5 резерв в России</div>
-                <div>Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента.</div>
+                <span data-key="strike_desc1">Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента.</span>
             </div>
             <div class="card">
-                <span class="badge">резерв в России</span>
+                <span class="badge" data-key="strike_badge2">резерв в России</span>
                 <div class="price">ещё 5 человек</div>
-                <div>Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.</div>
+                <span data-key="strike_desc2">Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.</span>
             </div>
         </div>
-        <div class="impact-text">Перевод решает задачу. ARMBOT решает проблему. Команда, которая работает на результат, а не на отбывание часов.</div>
+        <div class="impact-text" data-key="strike_quote">Перевод решает задачу. ARMBOT решает проблему. Команда, которая работает на результат, а не на отбывание часов.</div>
     </div>
 
     <div class="highlight-block">
-        <div class="section-title" style="margin-top: 0;">› экосистема ARMBOT</div>
+        <div class="section-title" style="margin-top: 0;" data-key="eco_title">› экосистема ARMBOT</div>
         <div class="grid-2">
             <div class="card">
-                <span class="badge">Юристы</span>
+                <span class="badge" data-key="law_badge">Юристы</span>
                 <div class="price">РФ и КНР</div>
-                <div>Собственная группа юристов в России и Китае. Работают в единой цепочке. Русские специалисты обеспечивают чистоту контракта. Китайские пресекают попытки навязать невыгодные условия.</div>
+                <span data-key="law_desc">Собственная группа юристов в России и Китае. Работают в единой цепочке. Русские специалисты обеспечивают чистоту контракта. Китайские пресекают попытки навязать невыгодные условия.</span>
             </div>
             <div class="card">
-                <span class="badge">Логисты</span>
+                <span class="badge" data-key="log_badge">Логисты</span>
                 <div class="price">там и тут</div>
-                <div>Свои логисты в обеих странах. Таможня, перевозка, оформление. Без фрилансеров, которые исчезают при первой проблеме. Только те, кто доводит груз до точки.</div>
+                <span data-key="log_desc">Свои логисты в обеих странах. Таможня, перевозка, оформление. Без фрилансеров, которые исчезают при первой проблеме. Только те, кто доводит груз до точки.</span>
             </div>
         </div>
-        <div class="impact-text">Не «найти кого-нибудь». Своя стая. Каждый знает, что делать, когда нужен результат, а не отписка.</div>
+        <div class="impact-text" data-key="eco_quote">Не «найти кого-нибудь». Своя стая. Каждый знает, что делать, когда нужен результат, а не отписка.</div>
     </div>
 
     <div class="section">
-        <div class="section-title">› козыри</div>
+        <div class="section-title" data-key="trump_title">› козыри</div>
         <div class="grid-2">
-            <div class="card"><span class="badge">Допуски</span>Работа на объектах с особым режимом доступа. Вход по спецпропускам.</div>
-            <div class="card"><span class="badge">Спасение, а не перевод</span>Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.</div>
-            <div class="card"><span class="badge">Свои в Китае</span>Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.</div>
-            <div class="card"><span class="badge">Закрытая база</span>10 лет работы. Поставщики, схемы, подводные камни. Для своих.</div>
+            <div class="card"><span class="badge" data-key="trump1_title">Допуски</span><span data-key="trump1_desc">Работа на объектах с особым режимом доступа. Вход по спецпропускам.</span></div>
+            <div class="card"><span class="badge" data-key="trump2_title">Спасение, а не перевод</span><span data-key="trump2_desc">Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.</span></div>
+            <div class="card"><span class="badge" data-key="trump3_title">Свои в Китае</span><span data-key="trump3_desc">Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.</span></div>
+            <div class="card"><span class="badge" data-key="trump4_title">Закрытая база</span><span data-key="trump4_desc">10 лет работы. Поставщики, схемы, подводные камни. Для своих.</span></div>
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">› закрытый документ ARMBOT</div>
-        <p>10 лет работы на режимных объектах. Информация о том, как искать китайских поставщиков, проверять их, не попадать на таможне и что делать, если оборудование встало.</p>
-        <p style="margin-top: 0.8rem;">Документ на двух языках (русский и китайский). Не индексируется в поиске. Ссылка не публикуется в открытом доступе.</p>
-        <p style="margin-top: 0.8rem; color: #c96f2c;">Доступ по запросу для подтверждённых клиентов.</p>
+        <div class="section-title" data-key="doc_title">› закрытый документ ARMBOT</div>
+        <p data-key="doc_desc1">10 лет работы на режимных объектах. Информация о том, как искать китайских поставщиков, проверять их, не попадать на таможне и что делать, если оборудование встало.</p>
+        <p style="margin-top: 0.8rem;" data-key="doc_desc2">Документ на двух языках (русский и китайский). Не индексируется в поиске. Ссылка не публикуется в открытом доступе.</p>
+        <p style="margin-top: 0.8rem; color: #c96f2c;" data-key="doc_desc3">Доступ по запросу для подтверждённых клиентов.</p>
     </div>
 
-    <!-- НАЧАЛО БЛОКА ОТЗЫВОВ — ДОРАБОТАННЫЙ -->
     <div class="reviews-block">
-        <div class="reviews-title">› НАС РЕКОМЕНДУЮТ</div>
+        <div class="reviews-title" data-key="reviews_title">› НАС РЕКОМЕНДУЮТ</div>
         <div class="reviews-grid">
-            <!-- Ирина -->
             <div class="review-card">
-                <div class="review-text">Арман прекрасно справился с задачей — последовательный перевод бизнес-переговоров с китайскими партнерами. Коммуникабельный, инициативный, пунктуальный, отличный специалист. Переговоры прошли идеально.</div>
+                <div class="review-text" data-key="review1">Арман прекрасно справился с задачей — последовательный перевод бизнес-переговоров с китайскими партнерами. Коммуникабельный, инициативный, пунктуальный, отличный специалист. Переговоры прошли идеально.</div>
                 <div class="review-author">Ирина, руководитель отдела закупок <span class="review-date">март 2025</span></div>
             </div>
-            <!-- Юлия -->
             <div class="review-card">
-                <div class="review-text">Две недели без выходных, сложнейшие термины: "обечайка", "шпонки", "коллектор". Арман переводил так, что китайский инженер понимал с первого раза. Плюс встреча в аэропорту, гостиница — всё на себе. Лучший!</div>
+                <div class="review-text" data-key="review2">Две недели без выходных, сложнейшие термины: "обечайка", "шпонки", "коллектор". Арман переводил так, что китайский инженер понимал с первого раза. Плюс встреча в аэропорту, гостиница — всё на себе. Лучший!</div>
                 <div class="review-author">Юлия, технический директор <span class="review-date">октябрь 2025</span></div>
             </div>
-            <!-- Собственник ЛЗМА / 7 китайских директоров -->
             <div class="review-card">
-                <div class="review-text">На ЛЗМА Арман одновременно координировал 7 директоров китайских компаний. Каждый — со своим оборудованием. Он вёл переговоры по каждому участку, доводил конструктив, снимал конфликты. Без него проект бы встал. Сдали с опережением.</div>
+                <div class="review-text" data-key="review3">На ЛЗМА Арман одновременно координировал 7 директоров китайских компаний. Каждый — со своим оборудованием. Он вёл переговоры по каждому участку, доводил конструктив, снимал конфликты. Без него проект бы встал. Сдали с опережением.</div>
                 <div class="review-author">Собственник производства, ЛЗМА <span class="review-date">январь 2026</span></div>
             </div>
-            <!-- Родитель (дети) -->
             <div class="review-card parent-review">
-                <div class="review-text">Арман нашёл подход к ребёнку за одно занятие. Китайский перестал быть "страшным". Результат виден через месяц. Искренне рекомендую как преподавателя.</div>
+                <div class="review-text" data-key="review4">Арман нашёл подход к ребёнку за одно занятие. Китайский перестал быть "страшным". Результат виден через месяц. Искренне рекомендую как преподавателя.</div>
                 <div class="review-author">Екатерина, мама ученика (7 лет) <span class="review-date">2025</span></div>
             </div>
         </div>
-        <div class="impact-text" style="margin-top: 1.5rem;">Отзывы родителей — по запросу. Работаю на результат, а не на отбывание часов.</div>
+        <div class="impact-text" style="margin-top: 1.5rem;" data-key="review_footer">Отзывы родителей — по запросу. Работаю на результат, а не на отбывание часов.</div>
     </div>
-    <!-- КОНЕЦ БЛОКА ОТЗЫВОВ -->
 
     <div class="footer">
         <div style="margin-bottom: 1rem;">ARMBOT</div>
-        <div>Свидетельство о депонировании № 226.018.899F от 18.03.2026, АО "ЕДРИД"</div>
-        <div style="margin: 1rem 0;">Бренд зарегистрирован. Все права защищены.</div>
+        <div data-key="footer_cert">Свидетельство о депонировании № 226.018.899F от 18.03.2026, АО "ЕДРИД"</div>
+        <div style="margin: 1rem 0;" data-key="footer_rights">Бренд зарегистрирован. Все права защищены.</div>
         <a href="mailto:arman707vip@163.com" class="contact-email">arman707vip@163.com</a>
-        <div style="margin-top: 1rem;">Без звонков. Напишите задачу - получите цену и решение.</div>
+        <div style="margin-top: 1rem;" data-key="footer_action">Без звонков. Напишите задачу - получите цену и решение.</div>
     </div>
 </div>
+
+<script>
+    // Китайский перевод (коротко и технически)
+    const translations = {
+        ru: {
+            tagline_main: "технический перевод. координация ВЭД. пуск китайского оборудования.",
+            secret_objects: "опыт работы на режимных и стратегических объектах РФ",
+            levels_title: "› четыре уровня решений",
+            badge1: "Базовый перевод", badge2: "Координация китайской бригады", badge3: "Поиск поставщика под ключ", badge4: "Спасение оборудования",
+            desc1: "Устный или письменный перевод на объекте. Только то, что говорят. Без советов. Для тех, у кого всё под контролем. Нужен просто профессиональный язык.",
+            desc2: "Перевод + анализ работы китайских специалистов. Вижу, где они теряют качество или тянут время. Ваши глаза и уши на объекте. Советы и доработки - за отдельную ставку.",
+            desc3: "Нахожу проверенного поставщика в Китае. Проверяю, веду переговоры, помогаю с контрактом, логистикой, таможней. Полный цикл. Без посредников.",
+            desc4: "Китайский станок встал. Производство стоит. Приезжаю со своим штатом инженеров-универсалов. Диагностика, ремонт, пуск, обучение. Работаем там, где другие сдались.",
+            cases_title: "› кейсы",
+            case1: "Китайский станок заливки микросхем не давал герметичность. Команда ARMBOT за 3 дня перенастроила параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.",
+            case2: "Пусконаладка прессового оборудования. Координация китайских шеф-инженеров и российской команды. Результат: оборудование введено в эксплуатацию в срок. Работа в закрытом режиме.",
+            case3: "5 производственных направлений, 20+ китайских специалистов. Полная координация и техническая синхронизация. Результат: проект завершен с опережением графика.",
+            partners_title: "› клиенты и спонсоры",
+            clients_sub: "Клиенты", sponsors_sub: "Спонсоры",
+            partner_note: "Поставщики, которые прошли проверку на режимных объектах.",
+            strike_title: "› ударная группа ARMBOT",
+            strike_badge1: "штат ударных переводчиков", strike_badge2: "резерв в России",
+            strike_desc1: "Инженеры-переводчики, заточенные под неклассические задачи. Не просто перевод, а анализ процесса. Видят потенциальные узлы, где китайская сторона теряет качество или затягивает сроки. Работают на результат клиента.",
+            strike_desc2: "Постоянный резерв на территории РФ. Те же стандарты и требования. Мгновенное усиление при масштабировании проекта или для подстраховки ключевых направлений.",
+            strike_quote: "Перевод решает задачу. ARMBOT решает проблему. Команда, которая работает на результат, а не на отбывание часов.",
+            eco_title: "› экосистема ARMBOT",
+            law_badge: "Юристы", log_badge: "Логисты",
+            law_desc: "Собственная группа юристов в России и Китае. Работают в единой цепочке. Русские специалисты обеспечивают чистоту контракта. Китайские пресекают попытки навязать невыгодные условия.",
+            log_desc: "Свои логисты в обеих странах. Таможня, перевозка, оформление. Без фрилансеров, которые исчезают при первой проблеме. Только те, кто доводит груз до точки.",
+            eco_quote: "Не «найти кого-нибудь». Своя стая. Каждый знает, что делать, когда нужен результат, а не отписка.",
+            trump_title: "› козыри",
+            trump1_title: "Допуски", trump2_title: "Спасение, а не перевод", trump3_title: "Свои в Китае", trump4_title: "Закрытая база",
+            trump1_desc: "Работа на объектах с особым режимом доступа. Вход по спецпропускам.",
+            trump2_desc: "Станок встал - приезжаю со своими инженерами. Диагностика, ремонт, пуск.",
+            trump3_desc: "Люди, которые включаются, когда китайская сторона начинает играть по своим правилам.",
+            trump4_desc: "10 лет работы. Поставщики, схемы, подводные камни. Для своих.",
+            doc_title: "› закрытый документ ARMBOT",
+            doc_desc1: "10 лет работы на режимных объектах. Информация о том, как искать китайских поставщиков, проверять их, не попадать на таможне и что делать, если оборудование встало.",
+            doc_desc2: "Документ на двух языках (русский и китайский). Не индексируется в поиске. Ссылка не публикуется в открытом доступе.",
+            doc_desc3: "Доступ по запросу для подтверждённых клиентов.",
+            reviews_title: "› НАС РЕКОМЕНДУЮТ",
+            review1: "Арман прекрасно справился с задачей — последовательный перевод бизнес-переговоров с китайскими партнерами. Коммуникабельный, инициативный, пунктуальный, отличный специалист. Переговоры прошли идеально.",
+            review2: "Две недели без выходных, сложнейшие термины: 'обечайка', 'шпонки', 'коллектор'. Арман переводил так, что китайский инженер понимал с первого раза. Плюс встреча в аэропорту, гостиница — всё на себе. Лучший!",
+            review3: "На ЛЗМА Арман одновременно координировал 7 директоров китайских компаний. Каждый — со своим оборудованием. Он вёл переговоры по каждому участку, доводил конструктив, снимал конфликты. Без него проект бы встал. Сдали с опережением.",
+            review4: "Арман нашёл подход к ребёнку за одно занятие. Китайский перестал быть 'страшным'. Результат виден через месяц. Искренне рекомендую как преподавателя.",
+            review_footer: "Отзывы родителей — по запросу. Работаю на результат, а не на отбывание часов.",
+            footer_cert: "Свидетельство о депонировании № 226.018.899F от 18.03.2026, АО 'ЕДРИД'",
+            footer_rights: "Бренд зарегистрирован. Все права защищены.",
+            footer_action: "Без звонков. Напишите задачу - получите цену и решение."
+        },
+        zh: {
+            tagline_main: "技术翻译. 外贸协调. 中国设备启动.",
+            secret_objects: "在俄罗斯保密和战略设施的工作经验",
+            levels_title: "› 四个解决方案级别",
+            badge1: "基础翻译", badge2: "中国团队协调", badge3: "交钥匙供应商寻源", badge4: "设备紧急救援",
+            desc1: "现场口译或笔译。只翻译所说的内容。无建议。适用于一切受控、只需要专业翻译的情况。",
+            desc2: "翻译 + 分析中国专家的工作。我能看到他们在哪里损失质量或拖延时间。您在现场的耳目。建议和修改另计。",
+            desc3: "在中国寻找经过验证的供应商。验证、谈判、协助合同、物流、海关。全周期。无中间商。",
+            desc4: "中国机床停机。生产停滞。我带自己的全能工程师团队来。诊断、维修、启动、培训。我们在别人放弃的地方工作。",
+            cases_title: "› 案例",
+            case1: "中国芯片灌胶机密封不良。ARMBOT团队3天内重新配置了化合物供给参数。结果：合格芯片产量提高15%。工厂每月节省超过200万卢布。",
+            case2: "压力设备调试。协调中国总工程师和俄罗斯团队。结果：设备按时投入运行。在保密模式下工作。",
+            case3: "5个生产领域，20多名中国专家。全面协调和技术同步。结果：项目提前完成。",
+            partners_title: "› 客户与赞助商",
+            clients_sub: "客户", sponsors_sub: "赞助商",
+            partner_note: "在保密设施经过验证的供应商。",
+            strike_title: "› ARMBOT 突击小组",
+            strike_badge1: "突击翻译人员编制", strike_badge2: "俄罗斯后备队",
+            strike_desc1: "为非常规任务而生的工程师翻译。不仅仅是翻译，而是流程分析。他们看到中国方损失质量或拖延时间的潜在节点。为客户的结果而工作。",
+            strike_desc2: "俄罗斯境内的常备后备队。相同的标准和要求。项目扩展或关键方向保障时的即时增援。",
+            strike_quote: "翻译解决问题。ARMBOT解决问题。为结果而非混时间而工作的团队。",
+            eco_title: "› ARMBOT 生态系统",
+            law_badge: "律师", log_badge: "物流师",
+            law_desc: "在俄罗斯和中国的自有律师团队。在单一链条中工作。俄罗斯专家确保合同的清晰性。中国专家阻止强加不利条件的企图。",
+            log_desc: "在两国都有自己的物流师。海关、运输、清关。没有遇到第一个问题就消失的自由职业者。只有那些将货物运送到点的人。",
+            eco_quote: "不是'找个人'。自有的团队。当需要结果而非推诿时，每个人都知道该做什么。",
+            trump_title: "› 王牌",
+            trump1_title: "准入许可", trump2_title: "救援而非翻译", trump3_title: "在中国有自己人", trump4_title: "封闭数据库",
+            trump1_desc: "在特殊访问权限设施工作。凭特别通行证进入。",
+            trump2_desc: "机床停机 - 我带自己的工程师来。诊断、维修、启动。",
+            trump3_desc: "当中国方开始按自己的规则行事时，这些人就会介入。",
+            trump4_desc: "10年工作经验。供应商、方案、陷阱。仅限自己人。",
+            doc_title: "› ARMBOT 封闭文件",
+            doc_desc1: "在保密设施工作10年。关于如何寻找中国供应商、验证他们、避免海关问题以及设备停机时该做什么的信息。",
+            doc_desc2: "双语文件（俄语和中文）。未在搜索引擎中索引。链接不公开发布。",
+            doc_desc3: "仅限经过验证的客户索取。",
+            reviews_title: "› 客户推荐",
+            review1: "Arman出色地完成了任务——与中国合作伙伴商务谈判的交替传译。善于沟通、积极主动、守时、优秀的专家。谈判进行得非常顺利。",
+            review2: "连续两周无休，最复杂的术语。Arman的翻译让中国工程师第一次就理解了。加上机场接机、酒店——全部自己搞定。最棒的！",
+            review3: "在LZMA，Arman同时协调了7家中国公司的董事。每家都有自己的设备。他负责每个领域的谈判，达成建设性意见，化解冲突。没有他，项目就会停滞。我们提前交付了。",
+            review4: "Arman一节课就找到了接近孩子的方法。中文不再'可怕'。一个月后就能看到成果。真诚推荐他作为教师。",
+            review_footer: "家长的推荐可应要求提供。我为结果而非混时间工作。",
+            footer_cert: "版权登记证书 № 226.018.899F 日期 2026年3月18日, JSC 'EDRID'",
+            footer_rights: "品牌已注册。保留所有权利。",
+            footer_action: "不要打电话。写下您的任务 - 获得价格和解决方案。"
+        }
+    };
+
+    let currentLang = localStorage.getItem('armbot_lang') || 'ru';
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if(translations[lang] && translations[lang][key]) {
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = translations[lang][key];
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
+            }
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        localStorage.setItem('armbot_lang', lang);
+        currentLang = lang;
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            applyLanguage(lang);
+        });
+    });
+    applyLanguage(currentLang);
+</script>
 </body>
 </html>
