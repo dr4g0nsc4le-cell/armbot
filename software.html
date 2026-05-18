@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ARMBOT — прошивка PLC, программирование, параллельный импорт</title>
+    <title>ARMBOT — прошивка PLC, параллельный импорт</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
-            -webkit-user-select: none;
         }
         body {
             background-color: #0a0a0a;
@@ -155,7 +154,7 @@
     <div class="section">
         <div class="section-title" data-key="import_title">› ПАРАЛЛЕЛЬНЫЙ ИМПОРТ</div>
         <div class="grid-2">
-            <div class="card"><span class="badge" data-key="imp_badge1">Любая деталь</span><div class="price">от 1 штуки</div><span data-key="imp_desc1">Найдём и привезём любую деталь, даже если её нет в Китае. Япония, Корея, Европа — работаем со всеми направлениями.</span></div>
+            <div class="card"><span class="badge" data-key="imp_badge1">Любая деталь</span><div class="price"><span data-key="imp_price1">от 1 штуки</span></div><span data-key="imp_desc1">Найдём и привезём любую деталь, даже если её нет в Китае. Япония, Корея, Европа — работаем со всеми направлениями.</span></div>
             <div class="card"><span class="badge" data-key="imp_badge2">Полная интеграция</span><div class="price"></div><span data-key="imp_desc2">Мало привезти — надо встроить в производство. ARMBOT делает полный цикл: заказ, логистика, таможня, пуск и настройка.</span></div>
             <div class="card"><span class="badge" data-key="imp_badge3">Что уже ввезли</span><div class="price"></div><span data-key="imp_desc3">Вилочные погрузчики, термопластавтоматы, станки с ЧПУ, прессовое оборудование, промышленные линии.</span></div>
         </div>
@@ -191,6 +190,7 @@
             fw_desc3: "Быстрый выезд или удалёнка. Находим ошибки в ПО, которые заводской инженер не видит. Результат в срок.",
             import_title: "› ПАРАЛЛЕЛЬНЫЙ ИМПОРТ",
             imp_badge1: "Любая деталь", imp_badge2: "Полная интеграция", imp_badge3: "Что уже ввезли",
+            imp_price1: "от 1 штуки",
             imp_desc1: "Найдём и привезём любую деталь, даже если её нет в Китае. Япония, Корея, Европа — работаем со всеми направлениями.",
             imp_desc2: "Мало привезти — надо встроить в производство. ARMBOT делает полный цикл: заказ, логистика, таможня, пуск и настройка.",
             imp_desc3: "Вилочные погрузчики, термопластавтоматы, станки с ЧПУ, прессовое оборудование, промышленные линии.",
@@ -210,6 +210,7 @@
             fw_desc3: "快速上门或远程。找到工厂工程师看不到的软件错误。按期交付结果。",
             import_title: "› 平行进口",
             imp_badge1: "任何零件", imp_badge2: "全面集成", imp_badge3: "已进口的设备",
+            imp_price1: "1件起",
             imp_desc1: "即使在中国找不到，我们也能找到并交付任何零件。日本、韩国、欧洲 — 我们与所有地区合作。",
             imp_desc2: "仅仅交付是不够的 — 还需要集成到生产中。ARMBOT提供全周期服务：订购、物流、海关、启动和调试。",
             imp_desc3: "叉车、注塑机、数控机床、压力设备、工业生产线。",
@@ -225,7 +226,7 @@
     function applyLanguage(lang) {
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.getAttribute('data-key');
-            if(translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
+            if(translations[lang] && translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
         });
         document.querySelectorAll('.lang-btn').forEach(btn => {
             if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
