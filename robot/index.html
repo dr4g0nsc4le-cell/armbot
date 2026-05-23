@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ARMBOT — промышленные роботы из Китая</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            color: #ddd;
+            line-height: 1.65;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0f0f0f;
+            border-left: 4px solid #b85c1a;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c96f2c;
+            transition: width 0.5s ease;
+        }
+        .container:hover::before {
+            width: 100%;
+        }
+        .top-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2a2a2a;
+            gap: 1rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #c96f2c;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover {
+            opacity: 0.7;
+            text-decoration: underline;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid #c96f2c;
+            color: #c96f2c;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        .lang-btn.active {
+            background: #c96f2c;
+            color: #0a0a0a;
+        }
+        .lang-btn:hover {
+            background: #c96f2c;
+            color: #0a0a0a;
+            transform: scale(1.02);
+        }
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        .armbot-logo {
+            font-size: 4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c96f2c, #e6a157, #b85c1a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            margin: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: #c96f2c;
+            color: #0a0a0a;
+            box-shadow: 0 0 12px rgba(201, 111, 44, 0.5);
+        }
+        .btn-primary:hover {
+            background: #b85c1a;
+            transform: scale(1.03);
+        }
+        .btn-outline {
+            border: 1px solid #c96f2c;
+            color: #c96f2c;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: rgba(201, 111, 44, 0.1);
+            transform: translateY(-2px);
+        }
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(201, 111, 44, 0.1);
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 50px;
+            letter-spacing: -0.5px;
+            color: #c96f2c;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #c96f2c, #e6a157);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .robots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .robot-card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .robot-card:nth-child(1) { animation-delay: 0.05s; }
+        .robot-card:nth-child(2) { animation-delay: 0.1s; }
+        .robot-card:nth-child(3) { animation-delay: 0.15s; }
+        .robot-card:hover {
+            border-color: #c96f2c;
+            background: #141414;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(201, 111, 44, 0.15);
+        }
+        .robot-icon {
+            font-size: 3rem;
+            color: #c96f2c;
+            margin-bottom: 16px;
+        }
+        .robot-name {
+            font-size: 1.6rem;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 12px;
+            color: #c96f2c;
+        }
+        .robot-specs {
+            list-style: none;
+            margin: 20px 0;
+        }
+        .robot-specs li {
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        .price-request {
+            display: inline-block;
+            background: none;
+            border: 1px solid #c96f2c;
+            color: #c96f2c;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .price-request:hover {
+            background: #c96f2c;
+            color: #0a0a0a;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .feature-card {
+            padding: 24px;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+        .feature-card:hover {
+            background: #141414;
+            border-color: #c96f2c;
+        }
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #c96f2c;
+            margin-bottom: 16px;
+        }
+        .price-request-block {
+            background: #141414;
+            border-top: 2px solid #c96f2c;
+            border-radius: 32px;
+            padding: 40px;
+            text-align: center;
+        }
+        .messenger-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .messenger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 28px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            background: #1a1a1a;
+            color: white;
+            transition: 0.3s;
+            border: 1px solid #c96f2c;
+        }
+        .messenger-btn.telegram:hover { background: #0088cc; transform: scale(1.02);}
+        .messenger-btn.whatsapp:hover { background: #25D366; transform: scale(1.02);}
+        .calculator {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 28px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .calc-input, .calc-input select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #0a0a0a;
+            border: 1px solid #c96f2c;
+            color: white;
+            border-radius: 40px;
+            outline: none;
+            font-family: 'Courier New', monospace;
+        }
+        .calc-input option { background: #0a0a0a; }
+        .calc-result {
+            margin-top: 20px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #c96f2c;
+            word-break: break-word;
+        }
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            padding: 24px;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .step:hover {
+            background: #141414;
+            border-color: #c96f2c;
+        }
+        .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #c96f2c;
+        }
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #2a2a2a;
+            color: #777;
+            font-size: 0.8rem;
+        }
+        a {
+            color: #c96f2c;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .section-title { font-size: 1.5rem; }
+            .hero { min-height: auto; padding: 30px 0; }
+            .armbot-logo { font-size: 2.5rem; }
+            .subtitle { font-size: 1rem; }
+            .price-request-block { padding: 28px 16px; }
+            .top-menu {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 1rem;
+            }
+            .nav-links a {
+                white-space: normal;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-menu">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="ru">РУС</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+        <div class="nav-links">
+            <a href="/">Главная</a>
+            <a href="/software">Прошивки и импорт</a>
+            <a href="/robot">Project ARMBOT</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <div>
+            <div class="armbot-logo">PROJECT ARMBOT</div>
+            <div class="subtitle">Промышленные роботы напрямую из Китая<br>Без складов и наценок — только под ваш заказ</div>
+            <div>
+                <a href="#priceRequest" class="btn btn-primary">📦 Запросить цену и сроки</a>
+                <a href="#catalog" class="btn btn-outline">🤖 Смотреть модели</a>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <h2 class="section-title"><span>Почему Project ARMBOT</span></h2>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fas fa-china-railway"></i><h3>Прямые поставки</h3><p>Работаем напрямую с заводами в КНР</p></div>
+            <div class="feature-card"><i class="fas fa-tags"></i><h3>Цена без посредников</h3><p>Вы платите только за робота + логистику</p></div>
+            <div class="feature-card"><i class="fas fa-microchip"></i><h3>Актуальные модели</h3><p>Нет залежалого склада — только свежие партии</p></div>
+            <div class="feature-card"><i class="fas fa-headset"></i><h3>Инженерная поддержка</h3><p>Поможем подобрать под вашу задачу</p></div>
+        </div>
+    </section>
+
+    <section id="catalog">
+        <h2 class="section-title"><span>Модели роботов</span></h2>
+        <div class="robots-grid">
+            <div class="robot-card">
+                <div class="robot-icon"><i class="fas fa-robot"></i></div>
+                <div class="robot-name">ArmBot X1</div>
+                <ul class="robot-specs">
+                    <li>Грузоподъемность: 10 кг</li>
+                    <li>Вылет: 1400 мм</li>
+                    <li>Повторяемость: ±0.05 мм</li>
+                    <li>Применение: сварка, паллетирование</li>
+                </ul>
+                <button class="price-request" onclick="openRequest('ArmBot X1')">📩 Узнать цену</button>
+            </div>
+            <div class="robot-card">
+                <div class="robot-icon"><i class="fas fa-cogs"></i></div>
+                <div class="robot-name">ArmBot K3</div>
+                <ul class="robot-specs">
+                    <li>Грузоподъемность: 20 кг</li>
+                    <li>Вылет: 1800 мм</li>
+                    <li>Степень защиты: IP67</li>
+                    <li>Применение: фрезеровка, покраска</li>
+                </ul>
+                <button class="price-request" onclick="openRequest('ArmBot K3')">📩 Узнать цену</button>
+            </div>
+            <div class="robot-card">
+                <div class="robot-icon"><i class="fas fa-industry"></i></div>
+                <div class="robot-name">ArmBot Delta</div>
+                <ul class="robot-specs">
+                    <li>Скорость: 200 циклов/мин</li>
+                    <li>Зона: 800 мм</li>
+                    <li>Идеален для пищевой и фармацевтики</li>
+                </ul>
+                <button class="price-request" onclick="openRequest('ArmBot Delta')">📩 Узнать цену</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title"><span>Примерная стоимость</span></h2>
+        <div class="calculator">
+            <p style="margin-bottom: 12px;">Выберите модель:</p>
+            <select id="robotModelCalc" class="calc-input">
+                <option value="ArmBot X1">ArmBot X1 (10 кг)</option>
+                <option value="ArmBot K3">ArmBot K3 (20 кг)</option>
+                <option value="ArmBot Delta">ArmBot Delta (высокоскоростной)</option>
+            </select>
+            <p style="margin: 12px 0 8px;">Доп. оснащение:</p>
+            <label><input type="checkbox" id="gripper"> Схват / Gripper (+$950)</label><br>
+            <label><input type="checkbox" id="vision"> Техническое зрение (+$2100)</label>
+            <button class="btn btn-primary" style="margin-top: 20px; width:100%" onclick="calcPrice()">Рассчитать ориентир</button>
+            <div id="calcResult" class="calc-result"></div>
+            <p style="font-size:0.8rem; margin-top:12px">*Окончательная цена под запрос. Включает оборудование + доставку.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title"><span>Как мы работаем</span></h2>
+        <div class="steps">
+            <div class="step"><div class="step-number">1</div><h3>Вы оставляете запрос</h3><p>Модель или техзадание</p></div>
+            <div class="step"><div class="step-number">2</div><h3>Мы готовим КП</h3><p>Стоимость, сроки, логистика</p></div>
+            <div class="step"><div class="step-number">3</div><h3>Предоплата на завод</h3><p>Через безопасные каналы</p></div>
+            <div class="step"><div class="step-number">4</div><h3>Доставка под ключ</h3><p>От двери до двери</p></div>
+        </div>
+    </section>
+
+    <section id="priceRequest">
+        <div class="price-request-block">
+            <h2 style="font-size: 1.9rem; margin-bottom: 16px;">🔥 Узнайте точную цену</h2>
+            <p style="margin-bottom: 20px;">Напишите нам в мессенджер — ответим с КП, фото, видео и сроками поставки из Китая</p>
+            <div class="messenger-buttons">
+                <a href="https://t.me/armbot_support" target="_blank" class="messenger-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</a>
+                <a href="https://wa.me/79123456789" target="_blank" class="messenger-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+            <p style="margin: 20px 0 10px;">или отправьте быстрый запрос:</p>
+            <form id="quickForm" style="max-width: 400px; margin: 0 auto;">
+                <input type="text" id="userName" placeholder="Ваше имя" class="calc-input" style="margin-bottom:12px" required>
+                <input type="tel" id="userPhone" placeholder="Телефон / Telegram" class="calc-input" required>
+                <input type="text" id="userRobot" placeholder="Какая модель интересует?" class="calc-input">
+                <button type="submit" class="btn btn-primary" style="width:100%">📨 Отправить запрос</button>
+            </form>
+            <div id="formMessage" style="margin-top: 16px; color: #c96f2c; font-size: 0.95rem;"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>PROJECT ARMBOT — прямые поставки промышленных роботов из Китая</p>
+        <p style="margin-top: 12px;">📧 info@armbot.ru | Telegram: @armbot_sales</p>
+        <p style="margin-top: 12px;">© 2026 • Нет склада в РФ — только актуальное оборудование под заказ</p>
+    </footer>
+</div>
+
+<script>
+    function calcPrice() {
+        let model = document.getElementById('robotModelCalc').value;
+        let base = 0;
+        if (model === 'ArmBot X1') base = 8900;
+        else if (model === 'ArmBot K3') base = 14900;
+        else if (model === 'ArmBot Delta') base = 12400;
+
+        let extra = 0;
+        if (document.getElementById('gripper').checked) extra += 950;
+        if (document.getElementById('vision').checked) extra += 2100;
+        let totalUSD = base + extra;
+        let totalRUB = Math.round(totalUSD * 92);
+        document.getElementById('calcResult').innerHTML = `💰 Ориентировочная цена:<br> ${totalUSD} USD (~${totalRUB.toLocaleString()} ₽) + доставка`;
+    }
+
+    function openRequest(modelName) {
+        const robotField = document.getElementById('userRobot');
+        if (robotField) {
+            robotField.value = modelName;
+        }
+        const target = document.getElementById('priceRequest');
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (robotField) {
+            robotField.style.transition = '0.2s';
+            robotField.style.borderColor = '#c96f2c';
+            setTimeout(() => { robotField.style.borderColor = '#c96f2c'; }, 800);
+        }
+    }
+
+    const quickForm = document.getElementById('quickForm');
+    const formMessageDiv = document.getElementById('formMessage');
+
+    quickForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let name = document.getElementById('userName').value.trim();
+        let phone = document.getElementById('userPhone').value.trim();
+        let robot = document.getElementById('userRobot').value.trim() || 'не указана';
+        
+        if (!name) {
+            showTemporaryMessage('⚠️ Пожалуйста, укажите ваше имя', '#FFB347');
+            return;
+        }
+        if (!phone) {
+            showTemporaryMessage('⚠️ Укажите телефон или Telegram для связи', '#FFB347');
+            return;
+        }
+        if (phone.length < 4) {
+            showTemporaryMessage('⚠️ Контакт слишком короткий, проверьте', '#FFB347');
+            return;
+        }
+        
+        let fullMsg = `Здравствуйте! Я хочу получить расчет на робота.\n\n👤 Имя: ${name}\n📞 Контакт: ${phone}\n🤖 Интересует: ${robot}\n\nНужен точный расчет, сроки поставки из Китая.`;
+        let encodedMsg = encodeURIComponent(fullMsg);
+        
+        let tgLink = `https://t.me/armbot_support?text=${encodedMsg}`;
+        let waLink = `https://wa.me/79123456789?text=${encodedMsg}`;
+        
+        formMessageDiv.innerHTML = `
+            <div style="background: rgba(0,0,0,0.5); border-radius: 20px; padding: 12px;">
+                <p style="margin-bottom: 8px;">✅ Запрос готов! Нажмите для отправки:</p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="${tgLink}" target="_blank" style="background:#0088cc; padding:8px 20px; border-radius:40px; text-decoration:none; color:white; display:inline-flex; align-items:center; gap:8px;"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="${waLink}" target="_blank" style="background:#25D366; padding:8px 20px; border-radius:40px; text-decoration:none; color:white; display:inline-flex; align-items:center; gap:8px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+                <p style="font-size: 0.75rem; margin-top: 12px;">* Менеджер ответит вам в течение часа</p>
+            </div>
+        `;
+    });
+    
+    function showTemporaryMessage(msg, color = '#FFB347') {
+        const originalContent = formMessageDiv.innerHTML;
+        formMessageDiv.innerHTML = `<span style="color:${color};">${msg}</span>`;
+        setTimeout(() => {
+            if (formMessageDiv.innerHTML.includes(msg)) {
+                formMessageDiv.innerHTML = originalContent !== msg ? originalContent : '';
+            }
+        }, 2500);
+    }
+</script>
+</body>
+</html>
