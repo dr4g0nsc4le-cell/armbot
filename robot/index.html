@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ARMBOT — промышленные роботы из Китая</title>
+    <title>ARMBOT — Project ARMBOT | Разработка роботизированной платформы</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -31,6 +31,7 @@
             padding: 2rem;
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
             position: relative;
+            overflow-x: hidden;
         }
         .container::before {
             content: '';
@@ -96,248 +97,207 @@
             color: #0a0a0a;
             transform: scale(1.02);
         }
-        .hero {
-            min-height: 60vh;
+        /* 3D Сканер и визуализация */
+        .hero-3d {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        .scan-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 30px;
+        }
+        .robot-hologram {
+            position: relative;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
-            text-align: center;
-            padding: 60px 0 40px;
+            justify-content: center;
         }
-        .armbot-logo {
-            font-size: 4rem;
-            font-family: 'Courier New', monospace;
-            font-weight: 900;
-            background: linear-gradient(135deg, #c96f2c, #e6a157, #b85c1a);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+        .robot-silhouette {
+            font-size: 8rem;
+            color: rgba(201, 111, 44, 0.3);
+            position: absolute;
+            animation: pulse 3s ease-in-out infinite;
         }
-        .subtitle {
-            font-size: 1.3rem;
-            color: #ccc;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .robot-silhouette i {
+            filter: drop-shadow(0 0 10px rgba(201, 111, 44, 0.5));
         }
-        .btn {
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #c96f2c, #e6a157, #c96f2c, transparent);
+            animation: scan 3s ease-in-out infinite;
+            border-radius: 2px;
+            filter: blur(2px);
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        @keyframes pulse {
+            0% { opacity: 0.2; transform: scale(0.95); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+            100% { opacity: 0.2; transform: scale(0.95); }
+        }
+        .scan-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(201, 111, 44, 0.3);
+            border-radius: 50%;
+            animation: expand 3s ease-out infinite;
+        }
+        .scan-circles:nth-child(2) {
+            animation-delay: 1s;
+        }
+        .scan-circles:nth-child(3) {
+            animation-delay: 2s;
+        }
+        @keyframes expand {
+            0% { transform: scale(0.6); opacity: 0.6; border-width: 2px; }
+            100% { transform: scale(1.4); opacity: 0; border-width: 1px; }
+        }
+        .badge-dev {
             display: inline-block;
-            padding: 14px 32px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            margin: 8px;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-        .btn-primary {
             background: #c96f2c;
             color: #0a0a0a;
-            box-shadow: 0 0 12px rgba(201, 111, 44, 0.5);
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
-        .btn-primary:hover {
-            background: #b85c1a;
-            transform: scale(1.03);
-        }
-        .btn-outline {
-            border: 1px solid #c96f2c;
-            color: #c96f2c;
-            background: transparent;
-        }
-        .btn-outline:hover {
-            background: rgba(201, 111, 44, 0.1);
-            transform: translateY(-2px);
-        }
-        section {
-            padding: 60px 0;
-            border-bottom: 1px solid rgba(201, 111, 44, 0.1);
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
+        .hero-title {
+            font-size: 2.8rem;
             font-family: 'Courier New', monospace;
-            margin-bottom: 50px;
-            letter-spacing: -0.5px;
-            color: #c96f2c;
-        }
-        .section-title span {
+            font-weight: bold;
             background: linear-gradient(135deg, #c96f2c, #e6a157);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin-bottom: 15px;
         }
-        .robots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .robot-card {
-            background: #111;
-            border: 1px solid #2a2a2a;
-            border-radius: 24px;
-            padding: 24px;
-            transition: all 0.3s ease;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 0.5s ease forwards;
-        }
-        @keyframes slideUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .robot-card:nth-child(1) { animation-delay: 0.05s; }
-        .robot-card:nth-child(2) { animation-delay: 0.1s; }
-        .robot-card:nth-child(3) { animation-delay: 0.15s; }
-        .robot-card:hover {
-            border-color: #c96f2c;
-            background: #141414;
-            transform: translateY(-4px);
-            box-shadow: 0 4px 12px rgba(201, 111, 44, 0.15);
-        }
-        .robot-icon {
-            font-size: 3rem;
-            color: #c96f2c;
-            margin-bottom: 16px;
-        }
-        .robot-name {
-            font-size: 1.6rem;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 12px;
-            color: #c96f2c;
-        }
-        .robot-specs {
-            list-style: none;
-            margin: 20px 0;
-        }
-        .robot-specs li {
-            padding: 6px 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-        }
-        .price-request {
-            display: inline-block;
-            background: none;
-            border: 1px solid #c96f2c;
-            color: #c96f2c;
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin-top: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .price-request:hover {
-            background: #c96f2c;
-            color: #0a0a0a;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            text-align: center;
-        }
-        .feature-card {
-            padding: 24px;
-            background: #111;
-            border: 1px solid #2a2a2a;
-            border-radius: 20px;
-            transition: all 0.2s ease;
-        }
-        .feature-card:hover {
-            background: #141414;
-            border-color: #c96f2c;
-        }
-        .feature-card i {
-            font-size: 2.5rem;
-            color: #c96f2c;
-            margin-bottom: 16px;
-        }
-        .price-request-block {
-            background: #141414;
-            border-top: 2px solid #c96f2c;
-            border-radius: 32px;
-            padding: 40px;
-            text-align: center;
-        }
-        .messenger-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-        }
-        .messenger-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 28px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-weight: 600;
-            background: #1a1a1a;
-            color: white;
-            transition: 0.3s;
-            border: 1px solid #c96f2c;
-        }
-        .messenger-btn.telegram:hover { background: #0088cc; transform: scale(1.02);}
-        .messenger-btn.whatsapp:hover { background: #25D366; transform: scale(1.02);}
-        .calculator {
-            background: #111;
-            border: 1px solid #2a2a2a;
-            border-radius: 28px;
-            padding: 30px;
-            max-width: 500px;
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #999;
+            max-width: 600px;
             margin: 0 auto;
         }
-        .calc-input, .calc-input select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #0a0a0a;
-            border: 1px solid #c96f2c;
-            color: white;
-            border-radius: 40px;
-            outline: none;
-            font-family: 'Courier New', monospace;
+        .section {
+            margin-bottom: 3rem;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(201, 111, 44, 0.1);
         }
-        .calc-input option { background: #0a0a0a; }
-        .calc-result {
-            margin-top: 20px;
-            font-size: 1.4rem;
+        .section-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #c96f2c;
             font-weight: bold;
-            color: #c96f2c;
-            word-break: break-word;
         }
-        .steps {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
-        .step {
-            flex: 1;
-            text-align: center;
+        .spec-card {
             background: #111;
             border: 1px solid #2a2a2a;
-            padding: 24px;
-            border-radius: 20px;
-            transition: 0.2s;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
         }
-        .step:hover {
-            background: #141414;
+        .spec-card:hover {
             border-color: #c96f2c;
+            background: #141414;
+            transform: translateY(-2px);
         }
-        .step-number {
+        .spec-icon {
             font-size: 2rem;
+            color: #c96f2c;
+            margin-bottom: 1rem;
+        }
+        .spec-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+        .spec-value {
+            font-size: 1.3rem;
             font-weight: bold;
             color: #c96f2c;
         }
-        footer {
-            padding: 40px 0;
+        .spec-desc {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 0.5rem;
+        }
+        .info-block {
+            background: #111;
+            border-left: 3px solid #c96f2c;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .info-block h3 {
+            color: #c96f2c;
+            margin-bottom: 0.8rem;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #2a2a2a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-list li i {
+            color: #c96f2c;
+            width: 24px;
+        }
+        .development-badge {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(201, 111, 44, 0.05), rgba(201, 111, 44, 0.02));
+            border-radius: 24px;
+            border: 1px solid rgba(201, 111, 44, 0.2);
+        }
+        .dev-icon {
+            font-size: 3rem;
+            color: #c96f2c;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .footer {
+            margin-top: 2rem;
+            padding-top: 2rem;
             text-align: center;
             border-top: 1px solid #2a2a2a;
-            color: #777;
             font-size: 0.8rem;
+            color: #777;
         }
         a {
             color: #c96f2c;
@@ -345,11 +305,10 @@
         }
         @media (max-width: 768px) {
             .container { padding: 1rem; }
-            .section-title { font-size: 1.5rem; }
-            .hero { min-height: auto; padding: 30px 0; }
-            .armbot-logo { font-size: 2.5rem; }
-            .subtitle { font-size: 1rem; }
-            .price-request-block { padding: 28px 16px; }
+            .hero-title { font-size: 2rem; }
+            .scan-container { width: 200px; height: 200px; }
+            .robot-silhouette { font-size: 5rem; }
+            .spec-value { font-size: 1rem; }
             .top-menu {
                 flex-direction: column;
                 align-items: stretch;
@@ -359,10 +318,7 @@
                 justify-content: center;
                 gap: 1rem;
             }
-            .nav-links a {
-                white-space: normal;
-                text-align: center;
-            }
+            .nav-links a { white-space: normal; text-align: center; }
         }
     </style>
 </head>
@@ -380,200 +336,260 @@
         </div>
     </div>
 
-    <div class="hero">
-        <div>
-            <div class="armbot-logo">PROJECT ARMBOT</div>
-            <div class="subtitle">Промышленные роботы напрямую из Китая<br>Без складов и наценок — только под ваш заказ</div>
-            <div>
-                <a href="#priceRequest" class="btn btn-primary">📦 Запросить цену и сроки</a>
-                <a href="#catalog" class="btn btn-outline">🤖 Смотреть модели</a>
+    <!-- 3D HERO СКАНИРОВАНИЕ -->
+    <div class="hero-3d">
+        <div class="badge-dev" data-key="dev_badge">⚡ В РАЗРАБОТКЕ</div>
+        <div class="scan-container">
+            <div class="scan-circles"></div>
+            <div class="scan-circles"></div>
+            <div class="scan-circles"></div>
+            <div class="robot-hologram">
+                <div class="robot-silhouette"><i class="fas fa-robot"></i></div>
+                <div class="scan-line"></div>
+            </div>
+        </div>
+        <h1 class="hero-title" data-key="hero_title">ARMBOT 101</h1>
+        <div class="hero-subtitle" data-key="hero_subtitle">Роботизированная платформа с гибридным приводом</div>
+        <div style="margin-top: 20px;">
+            <i class="fas fa-microchip" style="color: #c96f2c; margin: 0 5px;"></i>
+            <i class="fas fa-cogs" style="color: #c96f2c; margin: 0 5px;"></i>
+            <i class="fas fa-bolt" style="color: #c96f2c; margin: 0 5px;"></i>
+        </div>
+    </div>
+
+    <!-- ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ -->
+    <div class="section">
+        <div class="section-title" data-key="spec_title">› ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ</div>
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-weight-hanging"></i></div>
+                <div class="spec-label" data-key="spec_weight_label">Вес</div>
+                <div class="spec-value">183 кг</div>
+                <div class="spec-desc" data-key="spec_weight_desc">Устойчивая конструкция</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-ruler-combined"></i></div>
+                <div class="spec-label" data-key="spec_size_label">Размеры</div>
+                <div class="spec-value">800x800x600 мм</div>
+                <div class="spec-desc" data-key="spec_size_desc">Компактная платформа</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-oil-can"></i></div>
+                <div class="spec-label" data-key="spec_engine_label">Двигатель</div>
+                <div class="spec-value">Loncín LC1P75F</div>
+                <div class="spec-desc">224cc / 15W-40 масло</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-battery-full"></i></div>
+                <div class="spec-label" data-key="spec_battery_label">Питание</div>
+                <div class="spec-value">24V / IP54</div>
+                <div class="spec-desc" data-key="spec_battery_desc">Аккумулятор + зарядка 5-7ч</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="spec-label" data-key="spec_cut_label">Ширина скашивания</div>
+                <div class="spec-value">20-150 мм</div>
+                <div class="spec-desc" data-key="spec_cut_desc">Регулировка высоты</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-volume-up"></i></div>
+                <div class="spec-label" data-key="spec_noise_label">Уровень шума</div>
+                <div class="spec-value">74 дБ</div>
+                <div class="spec-desc" data-key="spec_noise_desc">Комфортная работа</div>
             </div>
         </div>
     </div>
 
-    <section>
-        <h2 class="section-title"><span>Почему Project ARMBOT</span></h2>
-        <div class="features-grid">
-            <div class="feature-card"><i class="fas fa-china-railway"></i><h3>Прямые поставки</h3><p>Работаем напрямую с заводами в КНР</p></div>
-            <div class="feature-card"><i class="fas fa-tags"></i><h3>Цена без посредников</h3><p>Вы платите только за робота + логистику</p></div>
-            <div class="feature-card"><i class="fas fa-microchip"></i><h3>Актуальные модели</h3><p>Нет залежалого склада — только свежие партии</p></div>
-            <div class="feature-card"><i class="fas fa-headset"></i><h3>Инженерная поддержка</h3><p>Поможем подобрать под вашу задачу</p></div>
+    <!-- ОПИСАНИЕ ПРОЕКТА -->
+    <div class="section">
+        <div class="section-title" data-key="about_title">› О ПРОЕКТЕ</div>
+        <div class="info-block">
+            <h3 data-key="about_subtitle">ARMBOT 101 — гибридная платформа</h3>
+            <p data-key="about_text1">Роботизированная платформа ARMBOT 101 разрабатывается как универсальное решение для уборки территорий с возможностью дистанционного и автономного управления. Гибридная силовая установка (бензиновый двигатель + электропривод) обеспечивает длительное время работы и высокую маневренность.</p>
         </div>
-    </section>
+        <div class="info-block">
+            <h3><i class="fas fa-gamepad"></i> <span data-key="control_title">Система управления</span></h3>
+            <ul class="feature-list">
+                <li><i class="fas fa-arrow-up"></i> <span data-key="control1">Правый джойстик — движение вперед/назад, повороты</span></li>
+                <li><i class="fas fa-tachometer-alt"></i> <span data-key="control2">Регулятор скорости движения</span></li>
+                <li><i class="fas fa-cut"></i> <span data-key="control3">Переключатель SW-C — подъем/опускание косилки (20-150 мм)</span></li>
+                <li><i class="fas fa-snowplow"></i> <span data-key="control4">Левый джойстик — управление отвалом (подъем/наклон)</span></li>
+                <li><i class="fas fa-microchip"></i> <span data-key="control5">Дистанционный пульт с интуитивным интерфейсом</span></li>
+            </ul>
+        </div>
+        <div class="info-block">
+            <h3><i class="fas fa-shield-alt"></i> <span data-key="safety_title">Безопасность</span></h3>
+            <ul class="feature-list">
+                <li><i class="fas fa-ban"></i> <span data-key="safety1">Аварийная остановка на пульте и корпусе</span></li>
+                <li><i class="fas fa-temperature-high"></i> <span data-key="safety2">Защита от перегрева двигателя</span></li>
+                <li><i class="fas fa-tint"></i> <span data-key="safety3">Контроль жидкостей (масло, топливо)</span></li>
+                <li><i class="fas fa-road"></i> <span data-key="safety4">Режим перемещения без запуска двигателя</span></li>
+            </ul>
+        </div>
+    </div>
 
-    <section id="catalog">
-        <h2 class="section-title"><span>Модели роботов</span></h2>
-        <div class="robots-grid">
-            <div class="robot-card">
-                <div class="robot-icon"><i class="fas fa-robot"></i></div>
-                <div class="robot-name">ArmBot X1</div>
-                <ul class="robot-specs">
-                    <li>Грузоподъемность: 10 кг</li>
-                    <li>Вылет: 1400 мм</li>
-                    <li>Повторяемость: ±0.05 мм</li>
-                    <li>Применение: сварка, паллетирование</li>
-                </ul>
-                <button class="price-request" onclick="openRequest('ArmBot X1')">📩 Узнать цену</button>
-            </div>
-            <div class="robot-card">
-                <div class="robot-icon"><i class="fas fa-cogs"></i></div>
-                <div class="robot-name">ArmBot K3</div>
-                <ul class="robot-specs">
-                    <li>Грузоподъемность: 20 кг</li>
-                    <li>Вылет: 1800 мм</li>
-                    <li>Степень защиты: IP67</li>
-                    <li>Применение: фрезеровка, покраска</li>
-                </ul>
-                <button class="price-request" onclick="openRequest('ArmBot K3')">📩 Узнать цену</button>
-            </div>
-            <div class="robot-card">
-                <div class="robot-icon"><i class="fas fa-industry"></i></div>
-                <div class="robot-name">ArmBot Delta</div>
-                <ul class="robot-specs">
-                    <li>Скорость: 200 циклов/мин</li>
-                    <li>Зона: 800 мм</li>
-                    <li>Идеален для пищевой и фармацевтики</li>
-                </ul>
-                <button class="price-request" onclick="openRequest('ArmBot Delta')">📩 Узнать цену</button>
+    <!-- ЭТАПЫ РАЗРАБОТКИ -->
+    <div class="section">
+        <div class="section-title" data-key="dev_stages_title">› СТАТУС РАЗРАБОТКИ</div>
+        <div class="development-badge">
+            <div class="dev-icon"><i class="fas fa-microchip"></i></div>
+            <h3 style="color: #c96f2c; margin-bottom: 15px;" data-key="stage_title">Прототипирование и тестирование</h3>
+            <p data-key="stage_text1">На данный момент проект ARMBOT 101 находится на стадии активной разработки. Ведутся испытания гибридной силовой установки и систем дистанционного управления.</p>
+            <p style="margin-top: 15px;" data-key="stage_text2">Ожидаемая дата запуска производства: Q4 2026</p>
+            <div style="margin-top: 25px;">
+                <div style="height: 4px; background: #2a2a2a; border-radius: 2px; max-width: 300px; margin: 0 auto;">
+                    <div style="width: 65%; height: 100%; background: #c96f2c; border-radius: 2px;"></div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: #c96f2c;" data-key="progress_text">Прототип: 65% завершён</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section>
-        <h2 class="section-title"><span>Примерная стоимость</span></h2>
-        <div class="calculator">
-            <p style="margin-bottom: 12px;">Выберите модель:</p>
-            <select id="robotModelCalc" class="calc-input">
-                <option value="ArmBot X1">ArmBot X1 (10 кг)</option>
-                <option value="ArmBot K3">ArmBot K3 (20 кг)</option>
-                <option value="ArmBot Delta">ArmBot Delta (высокоскоростной)</option>
-            </select>
-            <p style="margin: 12px 0 8px;">Доп. оснащение:</p>
-            <label><input type="checkbox" id="gripper"> Схват / Gripper (+$950)</label><br>
-            <label><input type="checkbox" id="vision"> Техническое зрение (+$2100)</label>
-            <button class="btn btn-primary" style="margin-top: 20px; width:100%" onclick="calcPrice()">Рассчитать ориентир</button>
-            <div id="calcResult" class="calc-result"></div>
-            <p style="font-size:0.8rem; margin-top:12px">*Окончательная цена под запрос. Включает оборудование + доставку.</p>
-        </div>
-    </section>
-
-    <section>
-        <h2 class="section-title"><span>Как мы работаем</span></h2>
-        <div class="steps">
-            <div class="step"><div class="step-number">1</div><h3>Вы оставляете запрос</h3><p>Модель или техзадание</p></div>
-            <div class="step"><div class="step-number">2</div><h3>Мы готовим КП</h3><p>Стоимость, сроки, логистика</p></div>
-            <div class="step"><div class="step-number">3</div><h3>Предоплата на завод</h3><p>Через безопасные каналы</p></div>
-            <div class="step"><div class="step-number">4</div><h3>Доставка под ключ</h3><p>От двери до двери</p></div>
-        </div>
-    </section>
-
-    <section id="priceRequest">
-        <div class="price-request-block">
-            <h2 style="font-size: 1.9rem; margin-bottom: 16px;">🔥 Узнайте точную цену</h2>
-            <p style="margin-bottom: 20px;">Напишите нам в мессенджер — ответим с КП, фото, видео и сроками поставки из Китая</p>
-            <div class="messenger-buttons">
-                <a href="https://t.me/armbot_support" target="_blank" class="messenger-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</a>
-                <a href="https://wa.me/79123456789" target="_blank" class="messenger-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    <!-- ИНФРАСТРУКТУРА -->
+    <div class="section">
+        <div class="section-title" data-key="infra_title">› ПРЕИМУЩЕСТВА ПЛАТФОРМЫ</div>
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="spec-label" data-key="fuel_label">Топливо</div>
+                <div class="spec-value">1.4 л</div>
+                <div class="spec-desc">Бензин 92+ (РФ)</div>
             </div>
-            <p style="margin: 20px 0 10px;">или отправьте быстрый запрос:</p>
-            <form id="quickForm" style="max-width: 400px; margin: 0 auto;">
-                <input type="text" id="userName" placeholder="Ваше имя" class="calc-input" style="margin-bottom:12px" required>
-                <input type="tel" id="userPhone" placeholder="Телефон / Telegram" class="calc-input" required>
-                <input type="text" id="userRobot" placeholder="Какая модель интересует?" class="calc-input">
-                <button type="submit" class="btn btn-primary" style="width:100%">📨 Отправить запрос</button>
-            </form>
-            <div id="formMessage" style="margin-top: 16px; color: #c96f2c; font-size: 0.95rem;"></div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-oil-can"></i></div>
+                <div class="spec-label" data-key="oil_label">Масло</div>
+                <div class="spec-value">0.4 л</div>
+                <div class="spec-desc">15W-40, замена 50-80ч</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-charging-station"></i></div>
+                <div class="spec-label" data-key="charge_label">Зарядка АКБ</div>
+                <div class="spec-value">5-7 часов</div>
+                <div class="spec-desc">Индикация заряда</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-icon"><i class="fas fa-tools"></i></div>
+                <div class="spec-label" data-key="service_label">Обслуживание</div>
+                <div class="spec-value">Простое</div>
+                <div class="spec-desc">Фильтр, ножи, жидкости</div>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <p>PROJECT ARMBOT — прямые поставки промышленных роботов из Китая</p>
-        <p style="margin-top: 12px;">📧 info@armbot.ru | Telegram: @armbot_sales</p>
-        <p style="margin-top: 12px;">© 2026 • Нет склада в РФ — только актуальное оборудование под заказ</p>
-    </footer>
+    <div class="footer">
+        <p>ARMBOT — Project ARMBOT 101</p>
+        <p style="margin-top: 8px;">© 2026 • Гибридная роботизированная платформа • В разработке</p>
+        <p style="margin-top: 8px;"><a href="mailto:arman707vip@163.com">arman707vip@163.com</a></p>
+    </div>
 </div>
 
 <script>
-    function calcPrice() {
-        let model = document.getElementById('robotModelCalc').value;
-        let base = 0;
-        if (model === 'ArmBot X1') base = 8900;
-        else if (model === 'ArmBot K3') base = 14900;
-        else if (model === 'ArmBot Delta') base = 12400;
-
-        let extra = 0;
-        if (document.getElementById('gripper').checked) extra += 950;
-        if (document.getElementById('vision').checked) extra += 2100;
-        let totalUSD = base + extra;
-        let totalRUB = Math.round(totalUSD * 92);
-        document.getElementById('calcResult').innerHTML = `💰 Ориентировочная цена:<br> ${totalUSD} USD (~${totalRUB.toLocaleString()} ₽) + доставка`;
-    }
-
-    function openRequest(modelName) {
-        const robotField = document.getElementById('userRobot');
-        if (robotField) {
-            robotField.value = modelName;
+    const translations = {
+        ru: {
+            dev_badge: "⚡ В РАЗРАБОТКЕ",
+            hero_title: "ARMBOT 101",
+            hero_subtitle: "Роботизированная платформа с гибридным приводом",
+            spec_title: "› ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ",
+            spec_weight_label: "Вес",
+            spec_weight_desc: "Устойчивая конструкция",
+            spec_size_label: "Размеры",
+            spec_size_desc: "Компактная платформа",
+            spec_engine_label: "Двигатель",
+            spec_battery_label: "Питание",
+            spec_battery_desc: "Аккумулятор + зарядка 5-7ч",
+            spec_cut_label: "Ширина скашивания",
+            spec_cut_desc: "Регулировка высоты",
+            spec_noise_label: "Уровень шума",
+            spec_noise_desc: "Комфортная работа",
+            about_title: "› О ПРОЕКТЕ",
+            about_subtitle: "ARMBOT 101 — гибридная платформа",
+            about_text1: "Роботизированная платформа ARMBOT 101 разрабатывается как универсальное решение для уборки территорий с возможностью дистанционного и автономного управления. Гибридная силовая установка (бензиновый двигатель + электропривод) обеспечивает длительное время работы и высокую маневренность.",
+            control_title: "Система управления",
+            control1: "Правый джойстик — движение вперед/назад, повороты",
+            control2: "Регулятор скорости движения",
+            control3: "Переключатель SW-C — подъем/опускание косилки (20-150 мм)",
+            control4: "Левый джойстик — управление отвалом (подъем/наклон)",
+            control5: "Дистанционный пульт с интуитивным интерфейсом",
+            safety_title: "Безопасность",
+            safety1: "Аварийная остановка на пульте и корпусе",
+            safety2: "Защита от перегрева двигателя",
+            safety3: "Контроль жидкостей (масло, топливо)",
+            safety4: "Режим перемещения без запуска двигателя",
+            dev_stages_title: "› СТАТУС РАЗРАБОТКИ",
+            stage_title: "Прототипирование и тестирование",
+            stage_text1: "На данный момент проект ARMBOT 101 находится на стадии активной разработки. Ведутся испытания гибридной силовой установки и систем дистанционного управления.",
+            stage_text2: "Ожидаемая дата запуска производства: Q4 2026",
+            progress_text: "Прототип: 65% завершён",
+            infra_title: "› ПРЕИМУЩЕСТВА ПЛАТФОРМЫ",
+            fuel_label: "Топливо",
+            oil_label: "Масло",
+            charge_label: "Зарядка АКБ",
+            service_label: "Обслуживание"
+        },
+        zh: {
+            dev_badge: "⚡ 开发中",
+            hero_title: "ARMBOT 101",
+            hero_subtitle: "混合动力机器人平台",
+            spec_title: "› 技术规格",
+            spec_weight_label: "重量",
+            spec_weight_desc: "稳定结构",
+            spec_size_label: "尺寸",
+            spec_size_desc: "紧凑平台",
+            spec_engine_label: "发动机",
+            spec_battery_label: "电源",
+            spec_battery_desc: "电池 + 充电5-7小时",
+            spec_cut_label: "切割宽度",
+            spec_cut_desc: "高度调节",
+            spec_noise_label: "噪音水平",
+            spec_noise_desc: "舒适工作",
+            about_title: "› 关于项目",
+            about_subtitle: "ARMBOT 101 — 混合动力平台",
+            about_text1: "ARMBOT 101机器人平台正在开发中，作为区域清扫的通用解决方案，具有远程和自主控制能力。混合动力装置（汽油发动机+电动驱动）提供长续航和高机动性。",
+            control_title: "控制系统",
+            control1: "右摇杆 — 前进/后退，转弯",
+            control2: "速度调节器",
+            control3: "SW-C开关 — 升降割草机 (20-150毫米)",
+            control4: "左摇杆 — 推雪铲控制 (升降/倾斜)",
+            control5: "带直观界面的遥控器",
+            safety_title: "安全",
+            safety1: "遥控器和机体上的紧急停止",
+            safety2: "发动机过热保护",
+            safety3: "液体监控（机油、燃油）",
+            safety4: "不启动发动机的移动模式",
+            dev_stages_title: "› 开发状态",
+            stage_title: "原型设计和测试",
+            stage_text1: "目前ARMBOT 101项目处于积极开发阶段。混合动力装置和远程控制系统正在测试中。",
+            stage_text2: "预计生产启动时间：2026年第四季度",
+            progress_text: "原型: 65% 完成",
+            infra_title: "› 平台优势",
+            fuel_label: "燃料",
+            oil_label: "机油",
+            charge_label: "电池充电",
+            service_label: "维护"
         }
-        const target = document.getElementById('priceRequest');
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        if (robotField) {
-            robotField.style.transition = '0.2s';
-            robotField.style.borderColor = '#c96f2c';
-            setTimeout(() => { robotField.style.borderColor = '#c96f2c'; }, 800);
-        }
-    }
-
-    const quickForm = document.getElementById('quickForm');
-    const formMessageDiv = document.getElementById('formMessage');
-
-    quickForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        let name = document.getElementById('userName').value.trim();
-        let phone = document.getElementById('userPhone').value.trim();
-        let robot = document.getElementById('userRobot').value.trim() || 'не указана';
-        
-        if (!name) {
-            showTemporaryMessage('⚠️ Пожалуйста, укажите ваше имя', '#FFB347');
-            return;
-        }
-        if (!phone) {
-            showTemporaryMessage('⚠️ Укажите телефон или Telegram для связи', '#FFB347');
-            return;
-        }
-        if (phone.length < 4) {
-            showTemporaryMessage('⚠️ Контакт слишком короткий, проверьте', '#FFB347');
-            return;
-        }
-        
-        let fullMsg = `Здравствуйте! Я хочу получить расчет на робота.\n\n👤 Имя: ${name}\n📞 Контакт: ${phone}\n🤖 Интересует: ${robot}\n\nНужен точный расчет, сроки поставки из Китая.`;
-        let encodedMsg = encodeURIComponent(fullMsg);
-        
-        let tgLink = `https://t.me/armbot_support?text=${encodedMsg}`;
-        let waLink = `https://wa.me/79123456789?text=${encodedMsg}`;
-        
-        formMessageDiv.innerHTML = `
-            <div style="background: rgba(0,0,0,0.5); border-radius: 20px; padding: 12px;">
-                <p style="margin-bottom: 8px;">✅ Запрос готов! Нажмите для отправки:</p>
-                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                    <a href="${tgLink}" target="_blank" style="background:#0088cc; padding:8px 20px; border-radius:40px; text-decoration:none; color:white; display:inline-flex; align-items:center; gap:8px;"><i class="fab fa-telegram"></i> Telegram</a>
-                    <a href="${waLink}" target="_blank" style="background:#25D366; padding:8px 20px; border-radius:40px; text-decoration:none; color:white; display:inline-flex; align-items:center; gap:8px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                </div>
-                <p style="font-size: 0.75rem; margin-top: 12px;">* Менеджер ответит вам в течение часа</p>
-            </div>
-        `;
-    });
-    
-    function showTemporaryMessage(msg, color = '#FFB347') {
-        const originalContent = formMessageDiv.innerHTML;
-        formMessageDiv.innerHTML = `<span style="color:${color};">${msg}</span>`;
-        setTimeout(() => {
-            if (formMessageDiv.innerHTML.includes(msg)) {
-                formMessageDiv.innerHTML = originalContent !== msg ? originalContent : '';
+    };
+    let currentLang = localStorage.getItem('armbot_lang') || 'ru';
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if(translations[lang] && translations[lang][key] !== undefined) {
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = translations[lang][key];
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
             }
-        }, 2500);
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        localStorage.setItem('armbot_lang', lang);
     }
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+    });
+    applyLanguage(currentLang);
 </script>
 </body>
 </html>
