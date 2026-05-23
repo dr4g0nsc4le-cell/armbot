@@ -9,6 +9,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
         }
         body {
             background-color: #0a0a0a;
@@ -76,7 +78,7 @@
             color: #c96f2c;
             padding: 0.2rem 0.6rem;
             cursor: pointer;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
             font-size: 0.8rem;
             transition: all 0.2s ease;
         }
@@ -375,8 +377,9 @@
             <button class="lang-btn" data-lang="zh">中文</button>
         </div>
         <div class="nav-links">
-            <a href="./">Главная</a>
-            <a href="software.html">Прошивки и импорт</a>
+            <a href="/">Главная</a>
+            <a href="/software">Прошивки и импорт</a>
+            <a href="/robot">Роботы ArmBot</a>
         </div>
     </div>
     <div class="header">
