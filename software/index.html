@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ARMBOT — прошивка PLC, параллельный импорт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            color: #ddd;
+            line-height: 1.65;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0f0f0f;
+            border-left: 4px solid #b85c1a;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .top-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .nav-links a {
+            color: #c96f2c;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: opacity 0.2s;
+        }
+        .nav-links a:hover { opacity: 0.7; text-decoration: underline; }
+        .lang-switch { display: flex; gap: 0.5rem; }
+        .lang-btn {
+            background: none;
+            border: 1px solid #c96f2c;
+            color: #c96f2c;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            font-family: monospace;
+            transition: all 0.2s ease;
+        }
+        .lang-btn.active, .lang-btn:hover { background: #c96f2c; color: #0a0a0a; }
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            letter-spacing: -2px;
+            color: #c96f2c;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .logo::after {
+            content: '_';
+            animation: blink 1.2s step-end infinite;
+        }
+        @keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
+        .section { margin-bottom: 3rem; }
+        .section-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #c96f2c;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+        .card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:hover {
+            border-color: #c96f2c;
+            background: #141414;
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(201, 111, 44, 0.15);
+        }
+        .price { font-size: 1.6rem; font-weight: bold; color: #c96f2c; margin: 1rem 0 0.5rem; }
+        .badge {
+            background: #8c4b1a;
+            color: #111;
+            font-weight: bold;
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            margin-bottom: 0.8rem;
+        }
+        .impact-text {
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #c96f2c;
+        }
+        .footer {
+            margin-top: 3rem;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        a { color: #c96f2c; text-decoration: none; transition: opacity 0.2s; }
+        a:hover { opacity: 0.7; }
+        .contact-email {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: #111;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid #c96f2c;
+            transition: all 0.2s ease;
+        }
+        .contact-email:hover {
+            background: #c96f2c;
+            color: #0a0a0a;
+            transform: scale(1.01);
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .logo { font-size: 2rem; }
+            .top-menu {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .nav-links {
+                display: flex;
+                justify-content: space-between;
+            }
+            .nav-links a { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-menu">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="ru">РУС</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+        <div class="nav-links">
+            <a href="./">Главная</a>
+            <a href="software.html">Прошивки и импорт</a>
+        </div>
+    </div>
+    <div class="logo">ARMBOT</div>
+    <div style="margin: 0.5rem 0 2rem 0; border-left: 3px solid #c96f2c; padding-left: 1rem;" data-key="subtitle">прошивка PLC · программирование автоматики · параллельный импорт деталей</div>
+
+    <div class="section">
+        <div class="section-title" data-key="fw_title">› ПРОГРАММИРОВАНИЕ И ПРОШИВКА</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge" data-key="fw_badge1">PLC любой марки</span><div class="price"></div><span data-key="fw_desc1">Siemens, Delta, Mitsubishi, китайские OEM. Перепрошивка, восстановление после сбоя, изменение логики работы. Работаем с закрытыми протоколами.</span></div>
+            <div class="card"><span class="badge" data-key="fw_badge2">Автоматизация станков</span><div class="price"></div><span data-key="fw_desc2">Настройка софта, привязка к технологическому процессу. Интеграция нового оборудования в существующие линии без остановки производства.</span></div>
+            <div class="card"><span class="badge" data-key="fw_badge3">Удалённая диагностика</span><div class="price"></div><span data-key="fw_desc3">Быстрый выезд или удалёнка. Находим ошибки в ПО, которые заводской инженер не видит. Результат в срок.</span></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title" data-key="import_title">› ПАРАЛЛЕЛЬНЫЙ ИМПОРТ</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge" data-key="imp_badge1">Любая деталь</span><div class="price"><span data-key="imp_price1">от 1 штуки</span></div><span data-key="imp_desc1">Найдём и привезём любую деталь, даже если её нет в Китае. Япония, Корея, Европа — работаем со всеми направлениями.</span></div>
+            <div class="card"><span class="badge" data-key="imp_badge2">Полная интеграция</span><div class="price"></div><span data-key="imp_desc2">Мало привезти — надо встроить в производство. ARMBOT делает полный цикл: заказ, логистика, таможня, пуск и настройка.</span></div>
+            <div class="card"><span class="badge" data-key="imp_badge3">Что уже ввезли</span><div class="price"></div><span data-key="imp_desc3">Вилочные погрузчики, термопластавтоматы, станки с ЧПУ, прессовое оборудование, промышленные линии.</span></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title" data-key="cases_soft_title">› РЕАЛИЗОВАННЫЕ ПРОЕКТЫ</div>
+        <div class="grid-2">
+            <div class="card"><span class="badge">Завод ЖБИ (Москва)</span><span data-key="soft_case1">Перепрошили контроллер китайской линии розлива. Станок встал из-за слетевшей прошивки. За 8 часов восстановили работу. Сэкономили 3 недели ожидания китайского инженера.</span></div>
+            <div class="card"><span class="badge">Параллельный импорт (2024-2025)</span><span data-key="soft_case2">45 вилочных погрузчиков Heli. 12 термопластавтоматов. Детали для нефтегазового оборудования из Японии. Всё дошло, всё работает.</span></div>
+            <div class="card"><span class="badge">Автоматизация линии (Тула)</span><span data-key="soft_case3">Перепрограммировали 3 PLC разных производителей под единый интерфейс. Линия заработала без остановки. Результат через 2 недели.</span></div>
+        </div>
+    </div>
+
+    <div class="impact-text" style="margin: 1.5rem 0;" data-key="closing">Программируем то, что другие боятся трогать. Ввозим то, что другие не могут найти.</div>
+
+    <div class="footer">
+        <div>ARMBOT — технический перевод, координация ВЭД, программирование, параллельный импорт</div>
+        <div style="margin: 1rem 0;"><a href="mailto:arman707vip@163.com" class="contact-email">arman707vip@163.com</a></div>
+        <div data-key="footer_text">Без звонков. Опишите задачу — получите цену и решение.</div>
+        <div style="margin-top: 1rem;"><a href="./">← Вернуться на главную</a></div>
+    </div>
+</div>
+
+<script>
+    const translations = {
+        ru: {
+            subtitle: "прошивка PLC · программирование автоматики · параллельный импорт деталей",
+            fw_title: "› ПРОГРАММИРОВАНИЕ И ПРОШИВКА",
+            fw_badge1: "PLC любой марки", fw_badge2: "Автоматизация станков", fw_badge3: "Удалённая диагностика",
+            fw_desc1: "Siemens, Delta, Mitsubishi, китайские OEM. Перепрошивка, восстановление после сбоя, изменение логики работы. Работаем с закрытыми протоколами.",
+            fw_desc2: "Настройка софта, привязка к технологическому процессу. Интеграция нового оборудования в существующие линии без остановки производства.",
+            fw_desc3: "Быстрый выезд или удалёнка. Находим ошибки в ПО, которые заводской инженер не видит. Результат в срок.",
+            import_title: "› ПАРАЛЛЕЛЬНЫЙ ИМПОРТ",
+            imp_badge1: "Любая деталь", imp_badge2: "Полная интеграция", imp_badge3: "Что уже ввезли",
+            imp_price1: "от 1 штуки",
+            imp_desc1: "Найдём и привезём любую деталь, даже если её нет в Китае. Япония, Корея, Европа — работаем со всеми направлениями.",
+            imp_desc2: "Мало привезти — надо встроить в производство. ARMBOT делает полный цикл: заказ, логистика, таможня, пуск и настройка.",
+            imp_desc3: "Вилочные погрузчики, термопластавтоматы, станки с ЧПУ, прессовое оборудование, промышленные линии.",
+            cases_soft_title: "› РЕАЛИЗОВАННЫЕ ПРОЕКТЫ",
+            soft_case1: "Перепрошили контроллер китайской линии розлива. Станок встал из-за слетевшей прошивки. За 8 часов восстановили работу. Сэкономили 3 недели ожидания китайского инженера.",
+            soft_case2: "45 вилочных погрузчиков Heli. 12 термопластавтоматов. Детали для нефтегазового оборудования из Японии. Всё дошло, всё работает.",
+            soft_case3: "Перепрограммировали 3 PLC разных производителей под единый интерфейс. Линия заработала без остановки. Результат через 2 недели.",
+            closing: "Программируем то, что другие боятся трогать. Ввозим то, что другие не могут найти.",
+            footer_text: "Без звонков. Опишите задачу — получите цену и решение."
+        },
+        zh: {
+            subtitle: "PLC编程 · 自动化编程 · 零部件平行进口",
+            fw_title: "› 编程与固件刷写",
+            fw_badge1: "任何品牌的PLC", fw_badge2: "机床自动化", fw_badge3: "远程诊断",
+            fw_desc1: "西门子、Delta、三菱、中国OEM。刷写固件、故障恢复、修改逻辑。使用封闭协议工作。",
+            fw_desc2: "软件设置，绑定工艺流程。在不停止生产的情况下将新设备集成到现有生产线中。",
+            fw_desc3: "快速上门或远程。找到工厂工程师看不到的软件错误。按期交付结果。",
+            import_title: "› 平行进口",
+            imp_badge1: "任何零件", imp_badge2: "全面集成", imp_badge3: "已进口的设备",
+            imp_price1: "1件起",
+            imp_desc1: "即使在中国找不到，我们也能找到并交付任何零件。日本、韩国、欧洲 — 我们与所有地区合作。",
+            imp_desc2: "仅仅交付是不够的 — 还需要集成到生产中。ARMBOT提供全周期服务：订购、物流、海关、启动和调试。",
+            imp_desc3: "叉车、注塑机、数控机床、压力设备、工业生产线。",
+            cases_soft_title: "› 已完成项目",
+            soft_case1: "重新刷写了中国灌装线的控制器。由于固件故障，机床停机。8小时内恢复了运行。节省了等待中国工程师的3周时间。",
+            soft_case2: "45台Heli叉车。12台注塑机。来自日本的石油和天然气设备零件。全部运抵，全部正常运行。",
+            soft_case3: "将3个不同制造商的PLC重新编程为统一界面。生产线不停机运行。结果在2周内实现。",
+            closing: "我们编写别人不敢碰的程序。我们进口别人找不到的东西。",
+            footer_text: "不要打电话。描述您的任务 - 获得价格和解决方案。"
+        }
+    };
+    let currentLang = localStorage.getItem('armbot_lang') || 'ru';
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if(translations[lang] && translations[lang][key] !== undefined) el.innerHTML = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        localStorage.setItem('armbot_lang', lang);
+    }
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+    });
+    applyLanguage(currentLang);
+</script>
+</body>
+</html>
