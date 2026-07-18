@@ -97,7 +97,7 @@
             color: #0a0a0a;
             transform: scale(1.02);
         }
-        /* 3D Сканер и визуализация */
+        /* 3D Сканер и визуализация - удалены, заменены на полноценный 3D-вьювер */
         .hero-3d {
             display: flex;
             flex-direction: column;
@@ -106,71 +106,6 @@
             text-align: center;
             padding: 40px 0;
             position: relative;
-        }
-        .scan-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 30px;
-        }
-        .robot-hologram {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .robot-silhouette {
-            font-size: 8rem;
-            color: rgba(201, 111, 44, 0.3);
-            position: absolute;
-            animation: pulse 3s ease-in-out infinite;
-        }
-        .robot-silhouette i {
-            filter: drop-shadow(0 0 10px rgba(201, 111, 44, 0.5));
-        }
-        .scan-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #c96f2c, #e6a157, #c96f2c, transparent);
-            animation: scan 3s ease-in-out infinite;
-            border-radius: 2px;
-            filter: blur(2px);
-        }
-        @keyframes scan {
-            0% { top: 0%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-        @keyframes pulse {
-            0% { opacity: 0.2; transform: scale(0.95); }
-            50% { opacity: 0.5; transform: scale(1.05); }
-            100% { opacity: 0.2; transform: scale(0.95); }
-        }
-        .scan-circles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px solid rgba(201, 111, 44, 0.3);
-            border-radius: 50%;
-            animation: expand 3s ease-out infinite;
-        }
-        .scan-circles:nth-child(2) {
-            animation-delay: 1s;
-        }
-        .scan-circles:nth-child(3) {
-            animation-delay: 2s;
-        }
-        @keyframes expand {
-            0% { transform: scale(0.6); opacity: 0.6; border-width: 2px; }
-            100% { transform: scale(1.4); opacity: 0; border-width: 1px; }
         }
         .badge-dev {
             display: inline-block;
@@ -291,6 +226,11 @@
             margin-bottom: 20px;
             animation: pulse 2s ease-in-out infinite;
         }
+        @keyframes pulse {
+            0% { opacity: 0.2; transform: scale(0.95); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+            100% { opacity: 0.2; transform: scale(0.95); }
+        }
         .footer {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -303,11 +243,30 @@
             color: #c96f2c;
             text-decoration: none;
         }
+        /* Стили для 3D-вьювера */
+        .viewer-wrapper {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .viewer-wrapper h3 {
+            color: #c96f2c;
+            margin-bottom: 15px;
+        }
+        .viewer-wrapper iframe {
+            width: 100%;
+            height: 550px;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            background: #111;
+        }
+        .viewer-wrapper p {
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+        }
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .hero-title { font-size: 2rem; }
-            .scan-container { width: 200px; height: 200px; }
-            .robot-silhouette { font-size: 5rem; }
             .spec-value { font-size: 1rem; }
             .top-menu {
                 flex-direction: column;
@@ -319,6 +278,7 @@
                 gap: 1rem;
             }
             .nav-links a { white-space: normal; text-align: center; }
+            .viewer-wrapper iframe { height: 350px; }
         }
     </style>
 </head>
@@ -336,18 +296,9 @@
         </div>
     </div>
 
-    <!-- 3D HERO СКАНИРОВАНИЕ -->
+    <!-- 3D HERO (без анимаций, только заголовки) -->
     <div class="hero-3d">
         <div class="badge-dev" data-key="dev_badge">⚡ В РАЗРАБОТКЕ</div>
-        <div class="scan-container">
-            <div class="scan-circles"></div>
-            <div class="scan-circles"></div>
-            <div class="scan-circles"></div>
-            <div class="robot-hologram">
-                <div class="robot-silhouette"><i class="fas fa-robot"></i></div>
-                <div class="scan-line"></div>
-            </div>
-        </div>
         <h1 class="hero-title" data-key="hero_title">ARMBOT 101</h1>
         <div class="hero-subtitle" data-key="hero_subtitle">Роботизированная платформа с гибридным приводом</div>
         <div style="margin-top: 20px;">
@@ -425,6 +376,20 @@
                 <li><i class="fas fa-tint"></i> <span data-key="safety3">Контроль жидкостей (масло, топливо)</span></li>
                 <li><i class="fas fa-road"></i> <span data-key="safety4">Режим перемещения без запуска двигателя</span></li>
             </ul>
+        </div>
+    </div>
+
+    <!-- 3D ВЬЮВЕР -->
+    <div class="section" style="border-bottom: none; padding-bottom: 10px;">
+        <div class="viewer-wrapper">
+            <h3>3D-модель ARMBOT 101</h3>
+            <iframe src="https://3dviewer.net/embed.html#model=https://armbot.pro/robot/white_mesh.glb&camera=-2,2,5&background=0x222222&defaultcolor=0xFFFFFF&lights=0,2,0,0.8,0,4,0,0.5,0,1,4,0.1&autorotate=on&showfps=off" 
+                    width="100%" 
+                    height="550px" 
+                    frameborder="0" 
+                    allowfullscreen>
+            </iframe>
+            <p>Потяните мышкой, чтобы повернуть модель</p>
         </div>
     </div>
 
