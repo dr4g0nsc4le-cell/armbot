@@ -242,8 +242,6 @@
             color: #c96f2c;
             text-decoration: none;
         }
-
-        /* Стили для 3D-вьювера Sketchfab */
         .viewer-wrapper {
             text-align: center;
             margin: 30px 0;
@@ -285,7 +283,6 @@
             color: #888;
             margin-top: 10px;
         }
-
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .hero-title { font-size: 2rem; }
@@ -410,9 +407,17 @@
             </div>
             <div class="sketchfab-embed-wrapper">
                 <iframe 
-                    src="https://sketchfab.com/models/pLUz7/embed"
+                    title="Robot" 
+                    frameborder="0" 
                     allowfullscreen 
-                    allow="autoplay; fullscreen; xr-spatial-tracking">
+                    mozallowfullscreen="true" 
+                    webkitallowfullscreen="true" 
+                    allow="autoplay; fullscreen; xr-spatial-tracking" 
+                    xr-spatial-tracking 
+                    execution-while-out-of-viewport 
+                    execution-while-not-rendered 
+                    web-share 
+                    src="https://sketchfab.com/models/786174bf2e474b1a9ccefc56d0eabf95/embed">
                 </iframe>
             </div>
             <p>Потяните мышкой, чтобы повернуть модель</p>
