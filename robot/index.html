@@ -260,12 +260,18 @@
             border-radius: 4px;
             border: 1px solid rgba(201, 111, 44, 0.2);
         }
-        .viewer-wrapper iframe {
+        .viewer-wrapper .model-container {
             width: 100%;
             height: 550px;
-            border: 1px solid #2a2a2a;
-            border-radius: 8px;
             background: #111;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            overflow: hidden;
+        }
+        .viewer-wrapper model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: #111;
         }
         .viewer-wrapper p {
             font-size: 14px;
@@ -286,7 +292,7 @@
                 gap: 1rem;
             }
             .nav-links a { white-space: normal; text-align: center; }
-            .viewer-wrapper iframe { height: 350px; }
+            .viewer-wrapper .model-container { height: 350px; }
         }
     </style>
 </head>
@@ -387,7 +393,7 @@
         </div>
     </div>
 
-    <!-- 3D ВЬЮВЕР -->
+    <!-- 3D ВЬЮВЕР (model-viewer) -->
     <div class="section" style="border-bottom: none; padding-bottom: 10px;">
         <div class="viewer-wrapper">
             <h3>3D-модель ARMBOT 101</h3>
@@ -395,12 +401,16 @@
                 <i class="fas fa-lock" style="margin-right: 6px;"></i> 
                 Данная 3D-модель является ознакомительной. Некоторые детали скрыты в целях конфиденциальности (антиплагиат).
             </div>
-            <iframe src="https://3dviewer.net/embed.html#model=https://raw.githubusercontent.com/dr4g0nsc4le-cell/armbot/main/robot/white_mesh.glb&camera=-2,2,5&background=0x222222&defaultcolor=0xFFFFFF&lights=0,2,0,0.8,0,4,0,0.5,0,1,4,0.1&autorotate=on&showfps=off" 
-                    width="100%" 
-                    height="550px" 
-                    frameborder="0" 
-                    allowfullscreen>
-            </iframe>
+            <div class="model-container">
+                <model-viewer 
+                    src="https://raw.githubusercontent.com/dr4g0nsc4le-cell/armbot/main/robot/white_mesh.glb"
+                    alt="3D модель ARMBOT 101"
+                    auto-rotate
+                    camera-controls
+                    camera-orbit="-2 2 5"
+                    style="width: 100%; height: 100%; background-color: #111;">
+                </model-viewer>
+            </div>
             <p>Потяните мышкой, чтобы повернуть модель</p>
         </div>
     </div>
@@ -459,6 +469,8 @@
         <p style="margin-top: 8px;"><a href="mailto:arman707vip@163.com">arman707vip@163.com</a></p>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
 <script>
     const translations = {
