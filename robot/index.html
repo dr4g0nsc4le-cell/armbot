@@ -242,6 +242,8 @@
             color: #c96f2c;
             text-decoration: none;
         }
+
+        /* Стили для 3D-вьювера Sketchfab */
         .viewer-wrapper {
             text-align: center;
             margin: 30px 0;
@@ -260,24 +262,30 @@
             border-radius: 4px;
             border: 1px solid rgba(201, 111, 44, 0.2);
         }
-        .viewer-wrapper .model-container {
-            width: 100%;
-            height: 550px;
+        .viewer-wrapper .sketchfab-embed-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
             background: #111;
             border-radius: 8px;
             border: 1px solid #2a2a2a;
-            overflow: hidden;
         }
-        .viewer-wrapper model-viewer {
+        .viewer-wrapper .sketchfab-embed-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: #111;
+            border: none;
         }
         .viewer-wrapper p {
             font-size: 14px;
             color: #888;
             margin-top: 10px;
         }
+
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .hero-title { font-size: 2rem; }
@@ -292,7 +300,6 @@
                 gap: 1rem;
             }
             .nav-links a { white-space: normal; text-align: center; }
-            .viewer-wrapper .model-container { height: 350px; }
         }
     </style>
 </head>
@@ -393,7 +400,7 @@
         </div>
     </div>
 
-    <!-- 3D ВЬЮВЕР (model-viewer) -->
+    <!-- 3D ВЬЮВЕР (Sketchfab) -->
     <div class="section" style="border-bottom: none; padding-bottom: 10px;">
         <div class="viewer-wrapper">
             <h3>3D-модель ARMBOT 101</h3>
@@ -401,15 +408,12 @@
                 <i class="fas fa-lock" style="margin-right: 6px;"></i> 
                 Данная 3D-модель является ознакомительной. Некоторые детали скрыты в целях конфиденциальности (антиплагиат).
             </div>
-            <div class="model-container">
-                <model-viewer 
-                    src="robot/robot.glb"
-                    alt="3D модель ARMBOT 101"
-                    auto-rotate
-                    camera-controls
-                    camera-orbit="-2 2 5"
-                    style="width: 100%; height: 100%; background-color: #111;">
-                </model-viewer>
+            <div class="sketchfab-embed-wrapper">
+                <iframe 
+                    src="https://sketchfab.com/models/pLUz7/embed"
+                    allowfullscreen 
+                    allow="autoplay; fullscreen; xr-spatial-tracking">
+                </iframe>
             </div>
             <p>Потяните мышкой, чтобы повернуть модель</p>
         </div>
@@ -469,8 +473,6 @@
         <p style="margin-top: 8px;"><a href="mailto:arman707vip@163.com">arman707vip@163.com</a></p>
     </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
 <script>
     const translations = {
