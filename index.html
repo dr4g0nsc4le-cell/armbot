@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Арман Степанян | Координация ВЭД</title>
+    <title>Арман Степанян | Координация ВЭД и проектов с Китаем</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -23,33 +23,20 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
-            padding: 40px 20px;
+            padding: 50px 20px;
             box-sizing: border-box;
         }
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .photo {
-            width: 100px;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid var(--accent);
-        }
-        .header-text h1 {
-            margin: 0 0 5px 0;
-            font-size: 24px;
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
             letter-spacing: 0.5px;
         }
-        .header-text p {
+        .header p {
             margin: 0;
             color: var(--accent);
-            font-size: 14px;
+            font-size: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -57,7 +44,7 @@
         .intro {
             font-size: 16px;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin: 30px 0 40px 0;
             color: var(--text-muted);
         }
         .intro strong {
@@ -70,19 +57,36 @@
             color: var(--text-muted);
             border-bottom: 1px solid #334155;
             padding-bottom: 10px;
-            margin-bottom: 20px;
+            margin: 40px 0 20px 0;
         }
+        
+        /* Блок компетенций */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .skill-item {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.4;
+            border-left: 2px solid var(--accent);
+        }
+
+        /* Кейсы */
         .case-card {
             background-color: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 15px;
-            border-left: 3px solid var(--accent);
         }
         .case-title {
             font-size: 16px;
             font-weight: 600;
-            margin: 0 0 5px 0;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
         }
         .case-desc {
             font-size: 14px;
@@ -90,11 +94,39 @@
             margin: 0;
             line-height: 1.5;
         }
+        
+        /* Блок ВЭД и оборудования */
+        .ved-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ved-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+        .ved-list li::before {
+            content: "■";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 10px;
+            top: 5px;
+        }
+        .ved-list strong {
+            color: var(--text-main);
+        }
+
+        /* Кнопки */
         .buttons {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 40px;
+            margin-top: 50px;
         }
         .btn {
             display: block;
@@ -123,10 +155,11 @@
             color: var(--accent);
         }
         .footer {
-            margin-top: 40px;
+            margin-top: 50px;
             text-align: center;
             font-size: 12px;
             color: #475569;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -134,23 +167,29 @@
 
     <div class="container">
         <div class="header">
-            <!-- Замени photo.jpg на имя твоего файла с фото -->
-            <img src="photo.jpg" alt="Арман Степанян" class="photo">
-            <div class="header-text">
-                <h1>Арман Степанян</h1>
-                <p>ВЭД | Координация | Китай</p>
-            </div>
+            <h1>Арман Степанян</h1>
+            <p>Руководитель проектов (Китай) | ВЭД | Технический координатор</p>
         </div>
 
         <div class="intro">
-            10+ лет на <strong>режимных и стратегических объектах</strong>. Беру на себя полный цикл работы с китайской стороной: от переговоров и закупок до шеф-монтажа и решения финансовых форс-мажоров. Работаю там, где нужна точность, допуск и результат.
+            10+ лет опыта на <strong>режимных и стратегических объектах</strong> (ВИАМ, НИИЭТ, ЛЗМА, АЭС). Беру на себя полный цикл работы с китайской стороной: от переговоров и закупок до шеф-монтажа и решения финансовых форс-мажоров. Работаю там, где нужна точность, допуск и результат.
         </div>
 
-        <div class="section-title">Ключевые кейсы</div>
+        <div class="section-title">Ключевые компетенции</div>
+        <div class="skills-grid">
+            <div class="skill-item">ВЭД и закупки техники из Китая (HELI, автокраны)</div>
+            <div class="skill-item">Координация шеф-монтажа и пусконаладки</div>
+            <div class="skill-item">Управление группами 20+ иностранных специалистов</div>
+            <div class="skill-item">Антикризисное управление (финансовые споры, транзакции)</div>
+            <div class="skill-item">Работа на режимных объектах (авиация, микроэлектроника, АЭС)</div>
+            <div class="skill-item">Сопровождение сделок под ключ: завод, логистика, таможня</div>
+        </div>
+
+        <div class="section-title">Кейсы и результаты</div>
 
         <div class="case-card">
             <div class="case-title">НИИЭТ (Воронеж) — Микроэлектроника</div>
-            <div class="case-desc">Китайский станок заливки микросхем не давал герметичность. За 3 дня перенастроили параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Экономия для завода более 2 млн ₽ в месяц.</div>
+            <div class="case-desc">Китайский станок заливки микросхем не давал герметичность. За 3 дня перенастроили параметры подачи компаунда. Результат: выход годных микросхем вырос на 15%. Завод сэкономил более 2 млн ₽ в месяц.</div>
         </div>
 
         <div class="case-card">
@@ -164,15 +203,23 @@
         </div>
 
         <div class="case-card">
-            <div class="case-title">Параллельный импорт и ВЭД</div>
-            <div class="case-desc">Прямые поставки техники (HELI, автокраны), решение вопросов с ошибочными платежами и зависшими транзакциями. Полный цикл: завод, логистика, таможня.</div>
+            <div class="case-title">Проект «Атомные технологии» — Вывод из эксплуатации АЭС</div>
+            <div class="case-desc">Перевод и адаптация сложнейших технических спецификаций (ядерная физика, радиационная безопасность). Участие в подготовке коммерческого предложения для международного консорциума.</div>
         </div>
+
+        <div class="section-title">ВЭД, логистика и оборудование</div>
+        <ul class="ved-list">
+            <li><strong>Поставка техники:</strong> прямой опыт работы с заводами HELI (погрузчики), поставки автокранов. Полный цикл: переговоры, логистика, таможня, ввод в эксплуатацию.</li>
+            <li><strong>Финансовое урегулирование:</strong> успешное разрешение инцидентов с ошибочными платежами. Корректировка транзакций в ручном режиме, возврат средств и недопущение срыва поставок.</li>
+            <li><strong>Антикризисное управление:</strong> урегулирование спорных ситуаций между российской стороной и китайскими подрядчиками при нахождении средств на счетах (без разрыва контрактов).</li>
+            <li><strong>Сопровождение сделок:</strong> работа с режимными объектами, закрытыми протоколами и особой терминологией (гидравлика, ЧПУ, ядерная физика).</li>
+        </ul>
 
         <div class="buttons">
             <!-- Замени ссылку на свой чистый Telegram -->
             <a href="https://t.me/твой_никнейм" class="btn btn-primary" target="_blank">Запросить полное резюме</a>
             
-            <!-- Ссылка на WhatsApp, если нужна (замени номер) -->
+            <!-- Ссылка на WhatsApp (замени номер) -->
             <a href="https://wa.me/79850518852" class="btn btn-secondary" target="_blank">Написать в WhatsApp</a>
         </div>
 
